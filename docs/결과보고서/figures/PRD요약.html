@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>PRD 요약</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; padding: 28px 32px; font-family: "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif; color: #0f172a; background: #fff; }
+  h1 { font-size: 26px; } .sub { color: #475569; font-size: 15px; margin: 4px 0 16px; }
+  .top { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+  .card { border: 2px solid #cbd5e1; border-radius: 14px; padding: 12px 16px; }
+  .card h2 { font-size: 16px; margin-bottom: 6px; color: #334155; }
+  .card p, .card li { font-size: 14px; line-height: 1.6; } ul { padding-left: 18px; }
+  .goal { background: #fefce8; border-color: #facc15; }
+  .user { background: #f8fafc; }
+  .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .app { border-radius: 14px; padding: 12px 16px; border: 2px solid; }
+  .app h2 { font-size: 18px; margin-bottom: 2px; } .who { font-size: 13px; color: #475569; margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { border-bottom: 1px solid #e2e8f0; padding: 5px 4px; text-align: left; vertical-align: top; line-height: 1.45; }
+  th { font-size: 12.5px; color: #475569; }
+  .p { display: inline-block; min-width: 30px; text-align: center; border-radius: 6px; font-weight: 700; font-size: 12px; padding: 1px 5px; color: #fff; }
+  .p0 { background: #dc2626; } .p1 { background: #ea580c; } .p2 { background: #64748b; }
+  .scr { margin-top: 8px; font-size: 13px; color: #334155; } .scr b { color: #0f172a; }
+  .bot { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+</style></head>
+<body>
+  <h1>PRD 요약 — 애드체크 · 애드체크 비즈</h1>
+  <p class="sub">공정위 「추천·보증 등에 관한 표시·광고 심사지침」 기준으로 뒷광고를 <b>올리기 전(크리에이터)</b>과 <b>올라온 뒤(광고주)</b> 양쪽에서 막는 모바일 웹앱</p>
+  <div class="top">
+    <div class="card goal"><h2>🎯 목표</h2><ul>
+      <li>크리에이터: <b>30초 점검 → 고친 글 복사</b>로 몰라서 하는 뒷광고 0건</li>
+      <li>광고주: 캠페인 게시물 <b>일괄 검수 + 수정 요청</b>, 크리에이터 섭외까지 한곳에서</li>
+      <li>공정위 적발 유형 상위 3개(위치·미표시·표현 <b>83.2%</b>)를 잡는 규칙을 두 앱이 공유</li></ul></div>
+    <div class="card user"><h2>👤 사용자</h2><ul>
+      <li><b>대학생·소규모 크리에이터</b> — 협찬을 막 받기 시작, 표시 규칙을 모름 (휴대폰)</li>
+      <li><b>체험단 운영 광고주</b> — 동네 가게 사장님·브랜드 마케터, 게시물 수십 개 검수 (휴대폰)</li></ul></div>
+  </div>
+  <div class="apps">
+    <div class="app" style="border-color:#4f46e5;background:#eef2ff">
+      <h2 style="color:#4f46e5">애드체크 (크리에이터용)</h2><div class="who">adcheck-vibethon.vercel.app</div>
+      <table><tr><th>순위</th><th>핵심 기능</th><th>사용자가 할 수 있는 일</th></tr>
+        <tr><td><span class="p p0">P0</span></td><td><b>광고 표시 점검</b></td><td>글을 붙여넣으면 점수·판정·문제 항목</td></tr>
+        <tr><td><span class="p p0">P0</span></td><td><b>고친 글 제안</b></td><td>첫 줄에 [협찬] 문장 → 복사·재점검</td></tr>
+        <tr><td><span class="p p1">P1</span></td><td>이력 · 통계</td><td>자주 틀리는 항목 차트로 습관 교정</td></tr>
+        <tr><td><span class="p p2">P2</span></td><td>표시 규칙 가이드</td><td>좋은 예·나쁜 예로 규칙 학습</td></tr></table>
+      <div class="scr"><b>화면</b> 점검 · 이력 · 통계 · 가이드</div>
+    </div>
+    <div class="app" style="border-color:#0f766e;background:#ecfdf5">
+      <h2 style="color:#0f766e">애드체크 비즈 (광고주용)</h2><div class="who">adcheck-biz-vibethon.vercel.app</div>
+      <table><tr><th>순위</th><th>핵심 기능</th><th>사용자가 할 수 있는 일</th></tr>
+        <tr><td><span class="p p0">P0</span></td><td><b>캠페인 · 게시물 일괄 검수</b></td><td>붙여넣기만 하면 인플루언서별 판정</td></tr>
+        <tr><td><span class="p p0">P0</span></td><td><b>수정 요청 메시지 · 조치 상태</b></td><td>메시지 복사 → 수정 요청함 → 확인 완료</td></tr>
+        <tr><td><span class="p p1">P1</span></td><td>대시보드 · 화면 스캔</td><td>준수율 확인, 화면 촬영 → 한글 OCR 검수</td></tr>
+        <tr><td><span class="p p1">P1</span></td><td>협업 DB · DM · 선착순</td><td>크리에이터 관리, 행사 DM, 선착순 선발</td></tr></table>
+      <div class="scr"><b>화면</b> 대시보드 · 게시물 · 화면 스캔 · 협업(행사 상세) · 캠페인</div>
+    </div>
+  </div>
+  <div class="bot">
+    <div class="card"><h2>⚙️ 비기능 요구사항</h2><ul>
+      <li>휴대폰 375px · 한국어 · 큰 버튼 · <b>결과 1초 이내</b></li>
+      <li>서버·로그인 없음 → <b>글이 휴대폰 밖으로 나가지 않음</b>, 네트워크 없이도 점검</li>
+      <li>규칙 원본 1개 → 두 앱 판정 항상 일치 · 법률 자문 아님 고지</li></ul></div>
+    <div class="card"><h2>📈 성공 지표 · 🚫 범위 밖</h2><ul>
+      <li>예시 글 <b>30점 → 100점</b>, 광고주 준수율 <b>38% → 50%</b>, 스캔 OCR <b>100%</b></li>
+      <li>범위 밖: 로그인·서버 DB, SNS 계정 연동, 실제 DM 발송, 이미지·영상 속 표시 판독, AI 문장 생성</li></ul></div>
+  </div>
+</body></html>

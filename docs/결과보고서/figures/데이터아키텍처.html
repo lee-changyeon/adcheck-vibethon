@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>데이터 아키텍처</title>
+<style>
+  :root { --c:#4f46e5; --cbg:#eef2ff; --b:#0f766e; --bbg:#ecfdf5; --ink:#0f172a; --mut:#475569; --line:#cbd5e1; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; padding: 28px 32px; font-family: "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif; color: var(--ink); background: #fff; }
+  h1 { font-size: 26px; } .sub { color: var(--mut); font-size: 15px; margin: 4px 0 18px; }
+  .phone { border: 2.5px dashed #64748b; border-radius: 18px; padding: 16px 18px 18px; position: relative; }
+  .tag { position: absolute; top: -13px; left: 18px; background: #fff; padding: 0 8px; font-weight: 700; color: #334155; font-size: 15px; }
+  .row { display: grid; grid-template-columns: 1fr 230px 1fr; gap: 18px; align-items: stretch; }
+  .app { border-radius: 14px; padding: 14px; }
+  .app h2 { font-size: 18px; margin-bottom: 4px; } .app .who { font-size: 13px; color: var(--mut); margin-bottom: 10px; }
+  .c { background: var(--cbg); border: 2px solid var(--c); } .c h2 { color: var(--c); }
+  .b { background: var(--bbg); border: 2px solid var(--b); } .b h2 { color: var(--b); }
+  .scr { background: #fff; border-radius: 10px; padding: 8px 10px; margin-top: 7px; font-size: 13.5px; line-height: 1.45; border: 1px solid var(--line); }
+  .scr b { font-size: 14px; }
+  .flow { font-size: 12px; color: var(--mut); }
+  .eng { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .box { border: 2px solid #334155; border-radius: 12px; padding: 12px; text-align: center; background: #f8fafc; font-size: 13.5px; line-height: 1.5; }
+  .box b { font-size: 15.5px; display: block; margin-bottom: 4px; }
+  .arrow { text-align: center; font-size: 13px; color: #334155; font-weight: 600; }
+  .store { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px; }
+  .db { border-radius: 12px; padding: 10px 14px; font-size: 13px; line-height: 1.55; border: 2px solid; background: #fff; }
+  .db h3 { font-size: 15px; margin-bottom: 4px; } .db code { font-family: Consolas, monospace; font-size: 12.5px; background: #f1f5f9; padding: 0 4px; border-radius: 4px; }
+  .ext { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .x { border: 2px solid #94a3b8; border-radius: 12px; padding: 10px 12px; font-size: 13px; line-height: 1.5; background: #f8fafc; }
+  .x b { font-size: 14.5px; }
+  .src { margin-top: 14px; font-size: 13px; color: var(--mut); line-height: 1.6; border-top: 1px solid var(--line); padding-top: 10px; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #fff; margin-right: 4px; }
+</style></head>
+<body>
+  <h1>애드체크 · 애드체크 비즈 — 시스템 구성도와 데이터 흐름</h1>
+  <p class="sub">입력 → 처리(규칙 엔진) → 저장(localStorage) → 출력 · 서버·DB·API 키 없음 · 글이 휴대폰 밖으로 나가지 않음</p>
+
+  <div class="phone"><span class="tag">📱 휴대폰 브라우저 (모든 처리·저장이 이 안에서)</span>
+    <div class="row">
+      <div class="app c">
+        <h2>애드체크 · 크리에이터용</h2><div class="who">올리기 <b>전</b> · 내 글 1개</div>
+        <div class="scr"><span class="pill" style="background:#4f46e5">입력</span><b>점검</b> — 플랫폼 · 받은 대가 · 업체명 · 올릴 글</div>
+        <div class="scr"><span class="pill" style="background:#16a34a">출력</span><b>결과</b> — 점수 · 판정 · 문제 항목 · <b>고친 글</b> → 복사 / 다시 점검</div>
+        <div class="scr"><span class="pill" style="background:#16a34a">출력</span><b>이력 · 통계</b> — 자주 틀리는 항목 차트 · 가이드</div>
+      </div>
+      <div class="eng">
+        <div class="arrow">글 + 대가 ⟶</div>
+        <div class="box"><b>⚙️ 규칙 엔진 rules.ts</b>runCheck() 순수 함수<br>공정위 심사지침 6개 규칙<br>위반 −35 · 보완 −15 · 팁 −5<br><span style="color:#64748b;font-size:12px">원본 1개 → sync-rules로 복사<br>두 앱 판정이 항상 같음</span></div>
+        <div class="arrow">⟵ 게시물 글 + 캠페인 대가</div>
+      </div>
+      <div class="app b">
+        <h2>애드체크 비즈 · 광고주용</h2><div class="who">올라온 <b>뒤</b> · 캠페인 = 게시물 여러 개</div>
+        <div class="scr"><span class="pill" style="background:#0f766e">입력</span><b>게시물 검수</b> — 계정 · 플랫폼 · 글 붙여넣기</div>
+        <div class="scr"><span class="pill" style="background:#0f766e">입력</span><b>화면 스캔</b> — 연속 8장 → 선명도·줄무늬 점수 → 추천 장면 → 한글 OCR</div>
+        <div class="scr"><span class="pill" style="background:#16a34a">출력</span><b>상세 · 대시보드</b> — 판정 · 수정 요청 메시지 · 조치 상태 · 준수율</div>
+        <div class="scr"><span class="pill" style="background:#7c3aed">협업</span><b>크리에이터 DB → 행사 DM → 선착순 선발</b></div>
+      </div>
+    </div>
+    <div class="store">
+      <div class="db" style="border-color:#4f46e5"><h3>🗄 저장 · localStorage (크리에이터용)</h3>
+        <code>adcheck.draft</code> 작성 중인 입력 · <code>adcheck.history</code> 점검 이력 최대 100개<br>
+        <span class="flow">통계는 저장하지 않고 이력에서 매번 계산</span></div>
+      <div class="db" style="border-color:#0f766e"><h3>🗄 저장 · localStorage (광고주용)</h3>
+        <code>campaigns</code> <code>posts</code> <code>current</code> · <code>creators</code> <code>events</code> <code>dms</code> <code>applications</code> (앞에 adcheckbiz.)<br>
+        <span class="flow">판정·준수율·선발 순번은 저장하지 않고 매번 계산 → 규칙이 바뀌면 바로 새 기준</span></div>
+    </div>
+  </div>
+
+  <div class="ext">
+    <div class="x"><b>☁️ jsDelivr CDN</b> — tesseract.js 한글(kor+eng) 언어 데이터<br>화면 스캔 처음 1회만 내려받고 브라우저에 보관 · 실패 시 직접 입력</div>
+    <div class="x"><b>▲ Vercel</b> — 정적 파일(HTML·JS)만 배포<br>adcheck-vibethon / adcheck-biz-vibethon</div>
+    <div class="x"><b>📷 카메라 · 📋 클립보드</b><br>사진은 서버로 보내지 않음 · 고친 글·메시지·DM 문구 복사</div>
+  </div>
+
+  <div class="src"><b>데이터 출처</b> · 점검 규칙: 공정거래위원회 「추천·보증 등에 관한 표시·광고 심사지침」(2024-09-01 개정) 요약 ·
+    규칙 우선순위 근거: 공정위 2024 적발 유형(위치 39.4%, 미표시 26.5%, 표현 17.3%) · 입력: 사용자가 붙여넣은 글/촬영한 화면 ·
+    시연 데이터: 직접 만든 샘플(이력 7개, 캠페인 2개·게시물 12개, 크리에이터 10명·행사 2개) · 저장 위치: 각 기기 브라우저 localStorage</div>
+</body></html>
