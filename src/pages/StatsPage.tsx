@@ -4,10 +4,10 @@ import { Card, EmptyState, SectionTitle } from '../components/ui'
 import { ISSUE_SHORT, type IssueCode } from '../data/types'
 import { useHistory } from '../hooks/useHistory'
 
-const BRAND = '#4f46e5' // brand-600
-const MUTED_BAR = '#c7d2fe' // brand-200 느낌의 연한 색
-const INK_MUTED = '#64748b' // slate-500
-const GRID = '#e2e8f0' // slate-200
+const BRAND = '#33332e' // 본문색: 가장 많이 틀린 항목만 진하게
+const MUTED_BAR = '#dadad3' // 크림 톤 연한 막대
+const INK_MUTED = '#62625b' // 보조 글자색
+const GRID = '#e5e5e0' // 연한 선
 
 const TIPS: Record<IssueCode, string> = {
   NO_DISCLOSURE: '대가를 받았다면 "광고"나 "협찬"을 꼭 적으세요.',
@@ -41,15 +41,15 @@ export default function StatsPage() {
       <section className="grid grid-cols-3 gap-2">
         <Card className="text-center">
           <p className="text-xs text-slate-500">점검한 글</p>
-          <p className="mt-1 text-2xl font-bold">{total}</p>
+          <p className="mt-1 text-2xl font-extrabold tracking-tight">{total}</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">평균 점수</p>
-          <p className="mt-1 text-2xl font-bold text-brand-600">{avg}</p>
+          <p className="mt-1 text-2xl font-extrabold tracking-tight">{avg}</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">통과율</p>
-          <p className="mt-1 text-2xl font-bold">{Math.round((passed / total) * 100)}%</p>
+          <p className="mt-1 text-2xl font-extrabold tracking-tight">{Math.round((passed / total) * 100)}%</p>
         </Card>
       </section>
 
@@ -66,13 +66,13 @@ export default function StatsPage() {
                 <BarChart data={counts} layout="vertical" margin={{ top: 0, right: 36, bottom: 0, left: 8 }} barCategoryGap={12}>
                   <CartesianGrid horizontal={false} stroke={GRID} />
                   <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: INK_MUTED }} axisLine={false} tickLine={false} />
-                  <YAxis type="category" dataKey="name" width={96} tick={{ fontSize: 13, fill: '#0f172a' }} axisLine={false} tickLine={false} />
+                  <YAxis type="category" dataKey="name" width={96} tick={{ fontSize: 13, fill: '#33332e' }} axisLine={false} tickLine={false} />
                   <Tooltip
                     cursor={{ fill: 'rgba(99,102,241,0.08)' }}
                     formatter={(value) => [`${value}회`, '틀린 횟수']}
                     contentStyle={{ borderRadius: 12, border: `1px solid ${GRID}`, fontSize: 13 }}
                   />
-                  <Bar dataKey="횟수" animationDuration={500} radius={[0, 4, 4, 0]} label={{ position: 'right', fontSize: 12, fill: '#0f172a', formatter: (v: unknown) => `${v}회` }}>
+                  <Bar dataKey="횟수" animationDuration={500} radius={[0, 4, 4, 0]} label={{ position: 'right', fontSize: 12, fill: '#33332e', formatter: (v: unknown) => `${v}회` }}>
                     {counts.map((d, i) => (
                       <Cell key={d.code} fill={i === 0 ? BRAND : MUTED_BAR} />
                     ))}
@@ -88,7 +88,7 @@ export default function StatsPage() {
         <section>
           <SectionTitle>다음 글에서 이것만 지키세요</SectionTitle>
           <Card className="bg-brand-50 ring-brand-100">
-            <p className="text-sm text-brand-700">
+            <p className="text-sm text-slate-600">
               가장 많이 틀린 항목은 <b>'{top.name}'</b> ({top.횟수}회)
             </p>
             <p className="mt-1 font-semibold">{TIPS[top.code]}</p>

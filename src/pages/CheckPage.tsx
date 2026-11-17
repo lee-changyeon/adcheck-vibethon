@@ -55,9 +55,9 @@ export default function CheckPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl bg-brand-600 p-4 text-white">
-        <p className="text-lg font-bold">올리기 전에 30초 점검 ✅</p>
-        <p className="mt-1 text-sm leading-relaxed text-brand-100">
+      <section className="rounded-3xl bg-slate-950 p-5 text-white">
+        <p className="text-2xl font-extrabold tracking-tight">올리기 전에 30초 점검 ✅</p>
+        <p className="mt-1 text-sm leading-relaxed text-white/70">
           협찬 글을 붙여넣으면 공정위 광고 표시 기준으로 뒷광고 위험을 찾고, 고친 글까지 만들어 드려요.
         </p>
       </section>
@@ -65,7 +65,7 @@ export default function CheckPage() {
       <section>
         <SectionTitle>
           <span className="flex items-center gap-1.5">
-            <Sparkles size={16} className="text-brand-600" /> 예시 글로 체험하기
+            <Sparkles size={16} className="text-slate-950" /> 예시 글로 체험하기
           </span>
         </SectionTitle>
         <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 pb-1">
@@ -78,7 +78,7 @@ export default function CheckPage() {
                 setResult(null)
                 setPrevious(null)
               }}
-              className="shrink-0 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-slate-700 ring-1 ring-slate-200 active:scale-95"
+              className="shrink-0 rounded-full bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-200 active:scale-95"
             >
               {ex.label}
             </button>

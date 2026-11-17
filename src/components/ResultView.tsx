@@ -24,7 +24,7 @@ function ScoreRing({ score, verdict }: { score: number; verdict: Verdict }) {
   return (
     <div className="relative size-24 shrink-0">
       <svg viewBox="0 0 80 80" className="size-24 -rotate-90">
-        <circle cx="40" cy="40" r={r} fill="none" stroke="#e2e8f0" strokeWidth="8" />
+        <circle cx="40" cy="40" r={r} fill="none" stroke="#e5e5e0" strokeWidth="8" />
         <circle
           cx="40"
           cy="40"
@@ -39,7 +39,7 @@ function ScoreRing({ score, verdict }: { score: number; verdict: Verdict }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-bold">{score}</span>
+        <span className="text-2xl font-extrabold tracking-tight">{score}</span>
         <span className="text-[11px] text-slate-400">/ 100점</span>
       </div>
     </div>
@@ -103,7 +103,7 @@ export default function ResultView({ result, onRecheck }: { result: CheckResult;
 
       {needsFix && (
         <Card className="space-y-3 ring-brand-100">
-          <p className="font-bold text-brand-700">✍️ 이렇게 고쳐서 올리세요</p>
+          <p className="font-bold text-slate-950">✍️ 이렇게 고쳐서 올리세요</p>
           <pre className="max-h-72 overflow-auto whitespace-pre-wrap rounded-xl bg-brand-50 p-3 font-sans text-sm leading-relaxed">{fixedText}</pre>
           <div className="grid grid-cols-2 gap-2">
             <Button onClick={copy}>

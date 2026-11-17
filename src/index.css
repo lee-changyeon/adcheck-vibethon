@@ -1,13 +1,39 @@
 @import 'tailwindcss';
 
-/* 앱 대표 색은 여기서만 바꾼다 (brand-50 ~ brand-700) */
+/* 앱 대표 색은 여기서만 바꾼다 (brand-50 ~ brand-700)
+   v2 디자인: 따뜻한 크림색 중립 바탕 + 빨강 강조는 주요 버튼·활성 탭에만 */
 @theme {
-  --font-sans: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
+  /* Pretendard의 영문은 Inter 기반 → Inter 계열 느낌 + 한글 */
+  --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+  /* 강조색: 600(주요 버튼·활성 탭), 700(누른 상태). 50·100·500은 중립색으로 두어 강조를 아낀다 */
+  --color-brand-50: #f6f6f3;
+  --color-brand-100: #e5e5e0;
+  --color-brand-500: #262622;
+  --color-brand-600: #e60023;
+  --color-brand-700: #cc001f;
+
+  /* 중립색(slate)을 크림 톤으로 덮어쓴다: 바탕·선·글자 전부 이 단계에서 나온다 */
+  --color-slate-50: #fbfbf9;
+  --color-slate-100: #f6f6f3;
+  --color-slate-200: #e5e5e0;
+  --color-slate-300: #dadad3;
+  --color-slate-400: #91918c;
+  --color-slate-500: #767670;
+  --color-slate-600: #62625b;
+  --color-slate-700: #4a4a44;
+  --color-slate-800: #3b3b35;
+  --color-slate-900: #33332e;
+  --color-slate-950: #262622;
+
+  /* 모서리는 16px(버튼·입력·카드) / 32px(큰 카드·바텀시트) / pill 세 가지만 */
+  --radius-lg: 16px;
+  --radius-xl: 16px;
+  --radius-2xl: 16px;
+  --radius-3xl: 32px;
+
+  /* 그림자는 모달·바텀시트에만: 작은 그림자는 없앤다 */
+  --shadow-sm: 0 0 #0000;
 }
 
 /* 가로로 넘기는 칩 목록의 스크롤 막대 숨기기 */
