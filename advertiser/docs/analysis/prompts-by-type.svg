@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="156" viewBox="0 0 960 156" font-family="'Pretendard Variable', Pretendard, 'Malgun Gothic', sans-serif">
+<rect width="960" height="156" fill="#ffffff"/>
+<text x="24" y="40" font-size="22" font-weight="700" fill="#0f172a">프롬프트 유형</text>
+<text x="24" y="64" font-size="14" fill="#64748b">총 1개 · 키워드 기준 자동 분류</text>
+<line x1="140" x2="140" y1="80" y2="132" stroke="#e2e8f0" stroke-width="1"/><text x="126" y="115" text-anchor="end" font-size="15" fill="#0f172a">오류 수정</text><path d="M140,98 H884 Q888,98 888,102 V118 Q888,122 884,122 H140 Z" fill="#4f46e5"><title>오류 수정: 1개</title></path><text x="898" y="115" font-size="14" font-weight="600" fill="#0f172a">1</text>
+</svg>

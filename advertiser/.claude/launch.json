@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "advertiser",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "E:\\Claude_Work\\Vibethon\\sns-ma\\advertiser", "run", "dev", "--", "--port", "5176"],
+      "port": 5176
+    }
+  ]
+}

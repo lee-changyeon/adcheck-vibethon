@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+/* 앱 대표 색은 여기서만 바꾼다 (brand-50 ~ brand-700) */
+@theme {
+  --font-sans: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+  /* 광고주용은 청록색으로 크리에이터용(남색)과 구분 */
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0f766e;
+  --color-brand-700: #115e59;
+}
+
+/* 가로로 넘기는 칩 목록의 스크롤 막대 숨기기 */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body {
+  @apply bg-slate-100 text-slate-900 antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
