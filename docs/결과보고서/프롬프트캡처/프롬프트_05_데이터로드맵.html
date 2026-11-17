@@ -1,0 +1,51 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>배포 후 데이터(DB) 처리 — 3단계 로드맵</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1200px;background:#faf9f5;font-family:'Malgun Gothic','맑은 고딕',sans-serif;color:#1f1e1c;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.head{background:#262624;color:#f5f4ef;padding:30px 48px 26px}
+.head .no{display:inline-block;background:#d97757;color:#fff;font-weight:700;font-size:18px;border-radius:8px;padding:3px 12px;margin-right:12px;vertical-align:middle}
+.head h1{display:inline;font-size:30px;vertical-align:middle;letter-spacing:-0.5px}
+.head .impact{margin-top:14px;font-size:19px;color:#f0e6dc;border-left:4px solid #d97757;padding-left:14px}
+.head .impact b{color:#fff}
+.head .src{margin-top:10px;font-size:14px;color:#a8a69e}
+.win{margin:28px 48px 0;background:#fff;border:1px solid #e3e0d6;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.bar{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid #ece9e0;background:#f5f4ef;font-size:14px;color:#6b6a65}
+.dot{width:12px;height:12px;border-radius:50%;background:#dedbd2}
+.bar .t{margin-left:10px;font-weight:600;color:#3d3c38}
+.bar .tab{margin-left:auto;background:#fff;border:1px solid #e3e0d6;border-radius:6px;padding:1px 10px;font-size:13px}
+.chat{padding:26px 34px 30px}
+.u{display:flex;flex-direction:column;align-items:flex-end;margin:6px 0 22px}
+.u .bub{max-width:820px;background:#f0eee6;border-radius:18px;padding:14px 20px;font-size:18px;white-space:pre-wrap}
+.u .meta{font-size:13px;color:#8a8880;margin-top:6px}
+.u .meta b{color:#d97757}
+.a{display:flex;gap:14px;margin:0 0 22px}
+.a .ic{flex:none;width:30px;height:30px;border-radius:8px;background:#d97757;color:#fff;font-size:20px;line-height:30px;text-align:center;margin-top:2px}
+.a .body{flex:1;min-width:0}
+.a .who{font-size:13px;color:#8a8880;margin-bottom:4px}
+.a .sub{border:1px dashed #d9d5c9;border-radius:12px;padding:12px 18px;background:#fbfaf7}
+.body h2{font-size:22px;margin:8px 0 8px}
+.body h3{font-size:19px;margin:12px 0 6px}
+.body p{margin:6px 0}
+.body ul,.body ol{margin:6px 0 6px 24px}
+.body li{margin:2px 0}
+.body li ul{margin:2px 0 2px 20px}
+.body strong{color:#000}
+.body code{font-family:Consolas,monospace;font-size:15px;background:#f3f1ea;border:1px solid #e6e3d9;border-radius:5px;padding:0 5px}
+.body pre{font-family:Consolas,'Malgun Gothic',monospace;font-size:15px;background:#f6f5f0;border:1px solid #e6e3d9;border-radius:8px;padding:12px 16px;margin:8px 0;line-height:1.5;white-space:pre}
+.body table{border-collapse:collapse;margin:10px 0;font-size:15.5px;width:100%}
+.body th,.body td{border:1px solid #e3e0d6;padding:7px 10px;text-align:left;vertical-align:top}
+.body th{background:#f5f4ef}
+.body blockquote{border-left:3px solid #d9d5c9;padding:4px 14px;color:#4a4945;margin:6px 0}
+.lnk{color:#2b6cb0;text-decoration:underline}
+.omit{color:#8a8880;font-style:italic;font-size:15px;margin:8px 0;padding:4px 0;border-top:1px dashed #e3e0d6;border-bottom:1px dashed #e3e0d6;text-align:center}
+.foot{margin:14px 48px 26px;font-size:13.5px;color:#8a8880}
+</style></head><body>
+<div class="head"><span class="no">05</span><h1>배포 후 데이터(DB) 처리 — 3단계 로드맵</h1>
+<div class="impact"><b>결과물에 준 영향</b> · 개인정보를 기준으로 <strong>「글이 서버로 가지 않는 구조」를 장점으로 정리하고, 백업 → 익명 통계 → 로그인·클라우드의 3단계 데이터 로드맵</strong>을 향후계획과 데이터 아키텍처에 반영했다.</div>
+<div class="src">프롬프트 #18 · 2026-11-17 10:35 · 출처: docs/프롬프트기록.md, Claude Code 세션 기록</div></div>
+<div class="win"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">Claude Code</span><span>· 메인 세션 (애드체크 기획·개발)</span><span class="tab">Code</span></div>
+<div class="chat"><div class="u"><div class="bub">애드체크를 배포할 경우 크리에이터가 사용을 하면서 쌓이게 되는 DB는 어떻게 처리하지</div><div class="meta"><b>#18</b> · 10:35</div></div><div class="a"><div class="ic">✻</div><div class="body"><div class="who">Claude</div><p>지금 애드체크를 그대로 배포하면 <strong>서버에 쌓이는 DB가 없습니다.</strong> 따로 처리할 데이터가 생기지 않는 구조입니다.</p><h2>지금 구조: 데이터는 각자 휴대폰에만 저장</h2><pre>[크리에이터 휴대폰 브라우저]  ── localStorage (점검 이력, 작성 중인 글)
+          ↑
+[Vercel] 앱 화면 파일만 내려줌 (HTML·JS). 사용자 데이터는 받지 않음
+</pre><table><thead><tr><th>장점</th><th>단점</th></tr></thead><tbody><tr><td>아직 올리지 않은 협찬 글이나 업체 정보가 <strong>밖으로 나가지 않음</strong></td><td>휴대폰을 바꾸거나 브라우저 데이터를 지우면 이력이 사라짐</td></tr><tr><td>회원가입·개인정보 처리방침·보관 기간 같은 <strong>개인정보 의무가 생기지 않음</strong></td><td>여러 기기에서 같은 이력을 볼 수 없음</td></tr><tr><td>서버·DB 비용 0원, 서버 장애가 없음</td><td>운영자가 전체 이용 통계를 볼 수 없음</td></tr></tbody></table><div class="omit">… (중략) …</div><h2>실제 서비스로 키운다면: 단계별 선택지</h2><ol><li><strong>백업 파일 내보내기·불러오기</strong> (서버 없음, 30분 안팎)<ul><li>이력을 파일로 저장했다가 새 휴대폰에서 불러오는 방식입니다. 이력이 사라지는 단점을 가장 싸게 줄입니다.</li></ul></li><li><strong>익명 통계만 서버에 모으기</strong> (Vercel 서버리스 함수 + 작은 DB)<ul><li><strong>글 내용은 보내지 않고</strong> 플랫폼, 대가 종류, 위반 항목 코드, 점수만 모읍니다.</li></ul></li><li><strong>로그인 + 클라우드 저장</strong> (Supabase, Firebase 같은 서비스)<ul><li>여러 기기에서 이력을 함께 쓰고, 광고주용 앱과 연결할 때 필요합니다. 예를 들어 크리에이터가 점검한 결과를 광고주에게 바로 보낼 수 있습니다.</li></ul></li></ol><div class="omit">… (중략) …</div><p><strong>제 추천:</strong> 대회 버전은 지금 구조 그대로 두고, 위 1~3단계를 <strong>향후계획(<code>05_향후계획.md</code>)에 로드맵으로</strong> 넣는 것입니다.</p></div></div></div></div>
+<div class="foot">사용자 프롬프트는 프롬프트 기록(docs/프롬프트기록.md, 자동 기록)의 원문 그대로이며, AI 답변은 Claude Code 세션 기록의 원문 일부입니다. 「… (중략) …」은 답변 일부를 생략한 곳입니다.</div>
+</body></html>
