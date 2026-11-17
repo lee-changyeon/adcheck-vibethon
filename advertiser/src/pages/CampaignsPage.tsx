@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Card, ChoiceChips, EmptyState, Input, SectionTitle } from '../components/ui'
 import { evaluate, newId, PAID_REWARD_LABEL, type PaidReward } from '../data/biz'
 import { useBiz } from '../hooks/useBiz'
+import { COLLAB_KEYS } from '../hooks/useCollab'
 
 const REWARDS = (Object.keys(PAID_REWARD_LABEL) as PaidReward[]).map((r) => ({ value: r, label: PAID_REWARD_LABEL[r] }))
 
@@ -25,8 +26,8 @@ export default function CampaignsPage() {
   }
 
   const reset = () => {
-    if (confirm('등록한 캠페인과 게시물을 지우고 샘플 데이터로 되돌릴까요?')) {
-      for (const k of ['adcheckbiz.campaigns', 'adcheckbiz.posts', 'adcheckbiz.current']) localStorage.removeItem(k)
+    if (confirm('등록한 캠페인·게시물·크리에이터·행사를 지우고 샘플 데이터로 되돌릴까요?')) {
+      for (const k of ['adcheckbiz.campaigns', 'adcheckbiz.posts', 'adcheckbiz.current', ...COLLAB_KEYS]) localStorage.removeItem(k)
       location.assign('/')
     }
   }

@@ -24,11 +24,13 @@
 ## 폴더 구조
 - `src/App.tsx` — 하단 탭(NAV)과 라우트 목록. 페이지 추가 시 둘 다 한 줄씩 추가
 - `src/components/AppShell.tsx` — 휴대폰 폭(max-w-md) 앱 틀 + ErrorBoundary
-- `src/components/ui.tsx` — 공통 부품: Button, Card, Input, Textarea, Badge, ChoiceChips, ProgressBar, Fab, SectionTitle, EmptyState, BottomSheet
+- `src/components/ui.tsx` — 공통 부품: Button, Card, Input, Textarea, Badge, ChoiceChips, ScrollChips, ProgressBar, Fab, Toast, SectionTitle, EmptyState, BottomSheet
 - `src/components/BizParts.tsx` — CampaignSwitcher, VerdictBadge, StatusBadge, IssueList
-- `src/pages/` — 대시보드(/), 게시물(/posts), 화면 스캔(/scan), 캠페인(/campaigns)
+- `src/components/CollabParts.tsx` — CreatorForm, EventForm, AccountLine (협업 기능)
+- `src/pages/` — 대시보드(/), 게시물(/posts), 화면 스캔(/scan), 협업(/collab: 크리에이터 DB·행사 목록, /collab/events/:id: DM 발송·선착순 신청), 캠페인(/campaigns)
 - `src/data/` — biz.ts(캠페인·게시물 타입, 수정 요청 메시지), sample.ts(샘플 캠페인 2개·게시물 12개), rules.ts·types.ts(복사본)
-- `src/hooks/useBiz.ts` — 캠페인·게시물·현재 캠페인 상태
+- `src/data/collab.ts`(크리에이터·행사·DM 기록·신청 타입, 선발/대기 계산, DM 템플릿), `collabSample.ts`(크리에이터 10명·행사 2개)
+- `src/hooks/useBiz.ts` — 캠페인·게시물·현재 캠페인 상태, `useCollab.ts` — 협업 데이터, `useToast.ts` — 잠깐 뜨는 안내
 - `src/lib/clipboard.ts` — 복사 (http에서도 동작), `src/lib/frames.ts` — 연속 촬영 프레임 점수·합성, `src/lib/ocr.ts` — 글자 인식(지연 로딩), `src/lib/demoFrames.ts` — 예시 화면 6장
 - `docs/` — 이 앱의 기획·설계·작업·설명서 문서와 프롬프트 기록
 

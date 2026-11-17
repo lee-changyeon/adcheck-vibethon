@@ -1,8 +1,10 @@
-import { LayoutDashboard, ListChecks, Megaphone, ScanLine } from 'lucide-react'
+import { LayoutDashboard, ListChecks, Megaphone, ScanLine, Users } from 'lucide-react'
 import { Route, Routes } from 'react-router-dom'
 import AppShell, { type NavItem } from './components/AppShell'
 import CampaignsPage from './pages/CampaignsPage'
+import CollabPage from './pages/CollabPage'
 import DashboardPage from './pages/DashboardPage'
+import EventDetailPage from './pages/EventDetailPage'
 import PostsPage from './pages/PostsPage'
 import ScanPage from './pages/ScanPage'
 
@@ -11,6 +13,7 @@ const NAV: NavItem[] = [
   { to: '/', label: '대시보드', icon: LayoutDashboard },
   { to: '/posts', label: '게시물', icon: ListChecks },
   { to: '/scan', label: '화면 스캔', icon: ScanLine },
+  { to: '/collab', label: '협업', icon: Users },
   { to: '/campaigns', label: '캠페인', icon: Megaphone },
 ]
 
@@ -21,6 +24,8 @@ export default function App() {
         <Route path="/" element={<DashboardPage />} />
         <Route path="/posts" element={<PostsPage />} />
         <Route path="/scan" element={<ScanPage />} />
+        <Route path="/collab" element={<CollabPage />} />
+        <Route path="/collab/events/:id" element={<EventDetailPage />} />
         <Route path="/campaigns" element={<CampaignsPage />} />
       </Routes>
     </AppShell>

@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes, ComponentProps, InputHTMLAttributes, ReactNode } from 'react'
 
 /* 공통 UI 부품. 새 화면은 가능하면 이 부품들로 조립한다. */
 
@@ -41,14 +41,14 @@ export function Input({ label, className = '', ...props }: InputHTMLAttributes<H
     <label className="block">
       {label && <span className="mb-1.5 block text-sm font-medium text-slate-600">{label}</span>}
       <input
-        className={`w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 ${className}`}
+        className={`w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-3 text-base outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 ${className}`}
         {...props}
       />
     </label>
   )
 }
 
-export function Textarea({ label, className = '', ...props }: TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string }) {
+export function Textarea({ label, className = '', ...props }: ComponentProps<'textarea'> & { label?: string }) {
   return (
     <label className="block">
       {label && <span className="mb-1.5 block text-sm font-medium text-slate-600">{label}</span>}
@@ -125,6 +125,44 @@ export function ChoiceChips<T extends string>({
   )
 }
 
+/** 가로로 넘기는 필터 칩 (분야 필터 등). 항목 수가 많아도 한 줄로 */
+export function ScrollChips<T extends string>({
+  options,
+  value,
+  onChange,
+}: {
+  options: { value: T; label: string }[]
+  value: T
+  onChange: (v: T) => void
+}) {
+  return (
+    <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
+      {options.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          onClick={() => onChange(o.value)}
+          className={`min-h-10 shrink-0 rounded-full px-4 text-sm font-semibold transition active:scale-[0.98] ${
+            value === o.value ? 'bg-brand-600 text-white' : 'bg-white text-slate-600 ring-1 ring-slate-200'
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+/** 화면 아래쪽에 잠깐 떴다 사라지는 안내 문구. message가 빈 문자열이면 숨김 */
+export function Toast({ message }: { message: string }) {
+  if (!message) return null
+  return (
+    <div className="pointer-events-none fixed bottom-40 left-1/2 z-[60] w-[calc(100%-2.5rem)] max-w-sm -translate-x-1/2 rounded-xl bg-slate-900/90 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg">
+      {message}
+    </div>
+  )
+}
+
 export function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
   return (
     <div className="mb-3 flex items-center justify-between">
@@ -150,7 +188,7 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40" onClick={onClose}>
       <div
-        className="w-full max-w-md rounded-t-3xl bg-white p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
+        className="max-h-[92svh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-white p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">

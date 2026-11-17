@@ -21,3 +21,12 @@ export function useLocalStorage<T>(key: string, initial: T) {
 
   return [value, setValue] as const
 }
+
+/** 바로 다른 화면으로 이동할 때: 화면이 닫히기 전에 저장까지 끝낸다 */
+export function saveNow<T>(key: string, value: T) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    /* 저장 실패는 무시 (시크릿 모드 등) */
+  }
+}
