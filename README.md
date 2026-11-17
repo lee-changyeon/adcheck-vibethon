@@ -1,32 +1,92 @@
-# React + TypeScript + Vite
+# 애드체크 · 애드체크 비즈
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> 뒷광고, **올리기 전에** 그리고 **올라온 뒤에** 양쪽에서 막는다.
 
-Currently, two official plugins are available:
+협찬을 처음 받는 인플루언서가 몰라서 하게 되는 **뒷광고**를, 공정거래위원회 「추천·보증 등에 관한 표시·광고 심사지침」 기준으로 점검하는 두 개의 모바일 웹앱입니다.
+2026 계명문화대학교 바이브톤 출품작 (주제: 전공을 연계한 문제해결 · SNS마케팅 전공 · 개인 참가)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 바로 써 보기
 
-## React Compiler
+휴대폰 브라우저로 여는 것을 권장합니다. 설치나 로그인은 필요 없습니다.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| 앱 | 누가 | 주소 |
+|---|---|---|
+| **애드체크** | 글을 올리는 크리에이터 | https://adcheck-vibethon.vercel.app |
+| **애드체크 비즈** | 협찬을 맡긴 광고주 | https://adcheck-biz-vibethon.vercel.app |
 
-## Expanding the Oxlint configuration
+QR 코드: [`docs/qr/adcheck_QR.png`](docs/qr/adcheck_QR.png) · [`docs/qr/adcheck-biz_QR.png`](docs/qr/adcheck-biz_QR.png)
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## 왜 만들었나
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+- 공정위가 2021~2025년 모니터링한 SNS 뒷광고 의심 게시물은 **약 10만 9천 건**입니다.
+- 2024년 적발 유형은 **부적절한 위치 39.4%**, 표시 안 함 26.5%, 부적절한 표현 17.3%였습니다. 대부분 "몰라서" 생기는 실수입니다.
+- 공정위 점검은 이미 올라간 글을 적발하는 사후 방식이라, **올리기 전에 스스로 점검할 도구**가 필요했습니다.
+- 국내 기준으로 올리기 전에 점검해 주는 도구는 찾지 못했습니다. 해외 도구는 미국 FTC 기준이라 한국에서는 부적절한 "#ad"를 정답으로 봅니다.
+
+출처와 자세한 근거는 [`docs/01_기획서.md`](docs/01_기획서.md)에 있습니다.
+
+## 두 앱
+
+### 애드체크 (크리에이터용, 올리기 전)
+- **광고 표시 점검:** 플랫폼, 받은 대가, 올릴 글을 넣으면 점수와 판정(적합 / 보완 필요 / 위반 위험)을 보여 주고, 문제 항목마다 "무엇이, 왜" 문제인지 설명합니다.
+- **고친 글 제안:** 첫 줄에 `[협찬] ○○로부터 제품을 무상으로 제공받아 작성한 글입니다.`를 넣은 수정본을 만들어 줍니다. 복사하거나 고친 글로 다시 점검할 수 있고, 원래 결과로 돌아갈 수도 있습니다.
+- **이력·통계:** 점검 기록을 저장하고, 내가 자주 틀리는 항목을 차트로 보여 줍니다.
+- **가이드:** 꼭 지킬 4가지 규칙을 좋은 예와 나쁜 예로 설명합니다.
+
+### 애드체크 비즈 (광고주용, 올라온 뒤) — [`advertiser/`](advertiser/)
+- **캠페인 일괄 검수:** 체험단 게시물을 붙여넣으면 인플루언서별 판정이 바로 나옵니다.
+- **수정 요청 메시지:** 문제 항목과 수정 예시 글이 담긴 메시지를 만들고, 조치 상태(미조치 → 요청함 → 확인 완료)를 관리합니다.
+- **대시보드:** 캠페인 준수율과 판정 분포를 보여 줍니다.
+- **화면 스캔:** 글을 복사할 수 없을 때(휴대폰 화면, 회의실 모니터) 여러 장을 연속으로 찍어 가장 선명하고 줄무늬가 적은 장면을 고르거나 합성한 뒤, 한글 글자 인식(OCR)으로 읽어 검수합니다.
+
+## 시연 순서 (1분)
+
+1. **애드체크:** 예시 「해시태그 끝에 #협찬」 → 점검하기 → **30점 위반 위험**
+2. 「고친 글로 점검」 → **100점 적합** → 「원래 글로 돌아가기」
+3. **애드체크 비즈:** 화면 스캔 → 「예시 화면으로 체험」 → 추천 장면으로 글자 읽기 → 등록·검수 → 수정 요청 메시지
+
+## 점검 규칙
+
+두 앱은 같은 규칙 6개를 씁니다. 원본은 [`src/data/rules.ts`](src/data/rules.ts)이고, 광고주용 앱은 `npm run sync-rules`로 복사해 두 앱의 판정이 항상 같습니다.
+
+| 판정 | 규칙 |
+|---|---|
+| 🔴 위반 | 표시 없음 · 반대 표현("내돈내산") · 표시가 뒤쪽에 있음 |
+| 🟡 보완 | 애매한 표현(#ad, thanks to 등) · 해시태그에 묻힘 |
+| 💡 팁 | 받은 대가를 구체적으로 적지 않음 |
+
+AI나 외부 서버를 부르지 않고 브라우저 안에서 바로 계산합니다. 데이터는 휴대폰 브라우저(localStorage)에만 저장되어 **올릴 글이 휴대폰 밖으로 나가지 않습니다.**
+
+## 기술 스택
+
+Vite · React 19 · TypeScript · Tailwind CSS v4 · react-router-dom · recharts · lucide-react · tesseract.js (광고주용 OCR) · Vercel
+
+## 직접 실행하기
+
+```bash
+# 크리에이터용 (애드체크)
+npm install
+npm run dev
+
+# 광고주용 (애드체크 비즈)
+cd advertiser
+npm install
+npm run dev -- --port 5176
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+`npm run check`는 타입 검사, 린트, 빌드를 한 번에 실행합니다.
+
+## 문서
+
+| 문서 | 크리에이터용 | 광고주용 |
+|---|---|---|
+| 기획서 | [docs/01_기획서.md](docs/01_기획서.md) | [advertiser/docs/01_기획서.md](advertiser/docs/01_기획서.md) |
+| 기술설계 | [docs/02_기술설계.md](docs/02_기술설계.md) | [advertiser/docs/02_기술설계.md](advertiser/docs/02_기술설계.md) |
+| 작업목록 | [docs/03_작업목록.md](docs/03_작업목록.md) | [advertiser/docs/03_작업목록.md](advertiser/docs/03_작업목록.md) |
+| 사용설명서 | [docs/04_사용설명서.md](docs/04_사용설명서.md) | [advertiser/docs/04_사용설명서.md](advertiser/docs/04_사용설명서.md) |
+| 향후계획 · 보고서 · 발표자료 | [05](docs/05_향후계획.md) · [06](docs/06_보고서.md) · [07](docs/07_발표자료.md) | |
+| 프롬프트 기록 | [docs/프롬프트기록.md](docs/프롬프트기록.md) | [advertiser/docs/프롬프트기록.md](advertiser/docs/프롬프트기록.md) |
+
+---
+
+공정거래위원회 「추천·보증 등에 관한 표시·광고 심사지침」을 바탕으로 한 **참고용 점검**이며, 법률 자문이 아닙니다.
