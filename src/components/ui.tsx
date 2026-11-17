@@ -63,11 +63,11 @@ export function Textarea({ label, className = '', ...props }: TextareaHTMLAttrib
 export type BadgeColor = 'brand' | 'green' | 'amber' | 'red' | 'slate'
 export function Badge({ children, color = 'brand' }: { children: ReactNode; color?: BadgeColor }) {
   const styles: Record<BadgeColor, string> = {
-    brand: 'bg-slate-950 text-white',
+    brand: 'bg-slate-200 text-slate-950',
     green: 'bg-green-50 text-green-700',
     amber: 'bg-amber-50 text-amber-700',
     red: 'bg-red-50 text-red-700',
-    slate: 'bg-slate-200 text-slate-700',
+    slate: 'bg-slate-100 text-slate-600',
   }
   return <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${styles[color]}`}>{children}</span>
 }
