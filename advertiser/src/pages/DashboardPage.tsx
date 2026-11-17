@@ -8,8 +8,8 @@ import { PLATFORM_LABEL, type Verdict } from '../data/types'
 import { useBiz } from '../hooks/useBiz'
 
 const VERDICT_FILL: Record<Verdict, string> = { 적합: '#16a34a', '보완 필요': '#d97706', '위반 위험': '#dc2626' }
-const INK_MUTED = '#64748b'
-const GRID = '#e2e8f0'
+const INK_MUTED = '#62625b'
+const GRID = '#e5e5e0'
 
 /** 기능 ④: 캠페인 대시보드 */
 export default function DashboardPage() {
@@ -39,11 +39,11 @@ export default function DashboardPage() {
       <section className="grid grid-cols-3 gap-2">
         <Card className="text-center">
           <p className="text-xs text-slate-500">게시물</p>
-          <p className="mt-1 text-2xl font-bold">{total}</p>
+          <p className="mt-1 text-2xl font-extrabold tracking-tight">{total}</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">준수율</p>
-          <p className="mt-1 text-2xl font-bold text-brand-600">{rate}%</p>
+          <p className="mt-1 text-2xl font-extrabold tracking-tight">{rate}%</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">조치 필요</p>
@@ -63,9 +63,9 @@ export default function DashboardPage() {
                   <BarChart data={chart} layout="vertical" margin={{ top: 0, right: 36, bottom: 0, left: 8 }} barCategoryGap={10}>
                     <CartesianGrid horizontal={false} stroke={GRID} />
                     <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: INK_MUTED }} axisLine={false} tickLine={false} />
-                    <YAxis type="category" dataKey="name" width={72} tick={{ fontSize: 13, fill: '#0f172a' }} axisLine={false} tickLine={false} />
+                    <YAxis type="category" dataKey="name" width={72} tick={{ fontSize: 13, fill: '#33332e' }} axisLine={false} tickLine={false} />
                     <Tooltip formatter={(v) => [`${v}개`, '게시물']} contentStyle={{ borderRadius: 12, border: `1px solid ${GRID}`, fontSize: 13 }} />
-                    <Bar dataKey="게시물" animationDuration={500} radius={[0, 4, 4, 0]} label={{ position: 'right', fontSize: 12, fill: '#0f172a', formatter: (v: unknown) => `${v}개` }}>
+                    <Bar dataKey="게시물" animationDuration={500} radius={[0, 4, 4, 0]} label={{ position: 'right', fontSize: 12, fill: '#33332e', formatter: (v: unknown) => `${v}개` }}>
                       {chart.map((d) => (
                         <Cell key={d.name} fill={VERDICT_FILL[d.name as Verdict]} />
                       ))}
@@ -80,7 +80,7 @@ export default function DashboardPage() {
             <SectionTitle>조치가 필요한 게시물</SectionTitle>
             {todo.length === 0 ? (
               <Card className="flex items-center gap-3 text-sm text-slate-600">
-                <PartyPopper size={22} className="text-brand-600" /> 모든 게시물이 규칙을 지키고 있어요.
+                <PartyPopper size={22} className="text-slate-950" /> 모든 게시물이 규칙을 지키고 있어요.
               </Card>
             ) : (
               <div className="space-y-2">

@@ -12,7 +12,7 @@ export function CampaignSwitcher({ campaigns, value, onChange }: { campaigns: Ca
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-3 pl-4 pr-10 text-base font-semibold outline-none focus:border-brand-500"
+        className="w-full appearance-none rounded-2xl border border-slate-300 bg-white py-3 pl-4 pr-10 text-base font-semibold outline-none focus:border-slate-950"
       >
         {campaigns.map((c) => (
           <option key={c.id} value={c.id}>

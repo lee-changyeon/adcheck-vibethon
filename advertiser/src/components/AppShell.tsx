@@ -21,10 +21,10 @@ export default function AppShell({
   children: ReactNode
 }) {
   return (
-    <div className="mx-auto flex min-h-svh max-w-md flex-col bg-slate-50 shadow-xl">
-      <header className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-slate-200 bg-white/90 px-5 py-3.5 backdrop-blur">
+    <div className="mx-auto flex min-h-svh max-w-md flex-col bg-white">
+      <header className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-slate-200 bg-white/95 px-5 py-3.5 backdrop-blur">
         <img src="/icon.svg" alt="" className="size-8 rounded-lg" />
-        <h1 className="text-lg font-bold">{title}</h1>
+        <h1 className="text-xl font-extrabold tracking-tight text-slate-950">{title}</h1>
         <span className="ml-auto text-sm font-medium text-slate-400">{todayLabel()}</span>
       </header>
 
@@ -39,8 +39,8 @@ export default function AppShell({
             to={to}
             end={to === '/'}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-1 py-2.5 text-xs font-medium ${
-                isActive ? 'text-brand-600' : 'text-slate-400'
+              `flex flex-col items-center gap-1 py-2.5 text-xs ${
+                isActive ? 'font-bold text-brand-600' : 'font-medium text-slate-500'
               }`
             }
           >

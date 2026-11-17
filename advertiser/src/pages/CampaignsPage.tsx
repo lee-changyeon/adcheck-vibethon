@@ -59,7 +59,7 @@ export default function CampaignsPage() {
                       {c.brand} · {PAID_REWARD_LABEL[c.reward]} · 게시물 {ps.length}개 · 준수율 {ps.length ? Math.round((ok / ps.length) * 100) : 0}%
                     </p>
                   </div>
-                  {selected && <Check size={20} className="text-brand-600" />}
+                  {selected && <Check size={20} className="text-slate-950" />}
                 </Card>
               )
             })}

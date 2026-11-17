@@ -126,7 +126,7 @@ export default function EventDetailPage() {
           <span>
             모집 {event.capacity}명 · 신청 마감 {formatDateTime(event.deadline)}
           </span>
-          <button onClick={() => setEditing(true)} className="flex min-h-9 items-center gap-1 rounded-lg px-2 font-semibold text-brand-700 hover:bg-brand-50">
+          <button onClick={() => setEditing(true)} className="flex min-h-9 items-center gap-1 rounded-lg px-2 font-semibold text-slate-950 underline-offset-2 hover:bg-slate-100">
             <Pencil size={14} /> 수정
           </button>
         </div>
@@ -259,25 +259,25 @@ function DmPanel({
       <section>
         <SectionTitle
           action={
-            <button onClick={toggleAll} disabled={!filtered.length} className="flex min-h-9 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-brand-700 hover:bg-brand-50 disabled:opacity-40">
+            <button onClick={toggleAll} disabled={!filtered.length} className="flex min-h-9 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-slate-950 underline-offset-2 hover:bg-slate-100 disabled:opacity-40">
               <Check size={16} /> {allFilteredSelected ? '선택 해제' : '전체 선택'}
             </button>
           }
         >
-          1. 받는 사람 <span className="text-brand-600">{selected.length}명</span>
+          1. 받는 사람 <span className="text-slate-950">{selected.length}명</span>
         </SectionTitle>
         <ScrollChips options={fieldOptions} value={field} onChange={setField} />
         {creators.length === 0 ? (
           <EmptyState icon={<Users size={36} />} title="크리에이터 DB가 비어 있어요" description="협업 탭 → 크리에이터 DB에서 먼저 등록해 주세요" />
         ) : (
-          <div className="mt-3 divide-y divide-slate-100 overflow-hidden rounded-2xl bg-white ring-1 ring-slate-100">
+          <div className="mt-3 divide-y divide-slate-100 overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
             {filtered.map((c) => {
               const on = selected.includes(c.id)
               const target = dmTarget(c)
               return (
                 <button key={c.id} onClick={() => toggle(c.id)} className="flex min-h-14 w-full items-center gap-3 px-4 py-2.5 text-left active:bg-slate-50">
                   <span
-                    className={`flex size-6 shrink-0 items-center justify-center rounded-md ring-1 ${on ? 'bg-brand-600 text-white ring-brand-600' : 'bg-white ring-slate-300'}`}
+                    className={`flex size-6 shrink-0 items-center justify-center rounded-md ring-1 ${on ? 'bg-slate-950 text-white ring-slate-950' : 'bg-white ring-slate-300'}`}
                   >
                     {on && <Check size={16} strokeWidth={3} />}
                   </span>
@@ -317,7 +317,7 @@ function DmPanel({
         <p className="mb-2 mt-3 text-xs font-medium text-slate-500">눌러서 넣기 — 받는 사람·행사 정보로 바뀌어요</p>
         <div className="flex flex-wrap gap-1.5">
           {PLACEHOLDERS.map((p) => (
-            <button key={p} onClick={() => insert(p)} className="min-h-9 rounded-lg bg-brand-50 px-2.5 text-xs font-semibold text-brand-700 active:scale-95">
+            <button key={p} onClick={() => insert(p)} className="min-h-9 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-900 active:scale-95">
               {p}
             </button>
           ))}
@@ -368,7 +368,7 @@ function DmPanel({
         {history.length === 0 ? (
           <EmptyState icon={<Send size={36} />} title="아직 보낸 DM이 없어요" description="받는 사람을 고르고 발송을 눌러 보세요" />
         ) : (
-          <div className="divide-y divide-slate-100 overflow-hidden rounded-2xl bg-white ring-1 ring-slate-100">
+          <div className="divide-y divide-slate-100 overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
             {history.map((d) => (
               <div key={d.id} className="flex items-center gap-3 px-4 py-2.5">
                 <div className="min-w-0 flex-1">
@@ -491,7 +491,7 @@ function ApplyPanel({
           <Badge color={closed ? 'slate' : 'green'}>{closed ? '마감' : remainingLabel(event.deadline, now)}</Badge>
         </div>
         <p className="text-center">
-          <span className="text-4xl font-extrabold tabular-nums text-brand-700">신청 {apps.length}명</span>
+          <span className="text-4xl font-extrabold tracking-tight tabular-nums text-slate-950">신청 {apps.length}명</span>
           <span className="ml-1.5 text-xl font-bold text-slate-400">/ 모집 {event.capacity}명</span>
         </p>
         <ProgressBar value={(apps.length / event.capacity) * 100} className="h-3" />
@@ -555,7 +555,7 @@ function ApplyPanel({
         <SectionTitle
           action={
             selectedList.length > 0 && (
-              <button onClick={copyWinners} className="flex min-h-9 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-brand-700 hover:bg-brand-50">
+              <button onClick={copyWinners} className="flex min-h-9 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-slate-950 underline-offset-2 hover:bg-slate-100">
                 <ClipboardCopy size={15} /> 선발 명단 복사
               </button>
             )
@@ -566,7 +566,7 @@ function ApplyPanel({
         {ranked.length === 0 ? (
           <EmptyState icon={<Users size={36} />} title="아직 신청자가 없어요" description="DM을 보내고 신청을 받아 보세요" />
         ) : (
-          <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-slate-100">
+          <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
             {ranked.map((a) => (
               <div key={a.id}>
                 {a.rank === event.capacity + 1 && (

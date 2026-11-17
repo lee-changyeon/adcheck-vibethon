@@ -226,7 +226,7 @@ export default function ScanPage() {
         <>
           <Card className="space-y-2">
             <p className="flex items-center gap-2 font-bold">
-              <ScanLine size={18} className="text-brand-600" /> 화면을 찍어서 검수하기
+              <ScanLine size={18} className="text-slate-950" /> 화면을 찍어서 검수하기
             </p>
             <p className="text-sm leading-relaxed text-slate-600">
               모니터나 휴대폰 화면을 찍으면 화면 깜빡임 때문에 <b>가로 줄무늬</b>가 생기고, 손떨림으로 글자가 흐려져요. 그래서 짧은 간격으로 <b>여러 장</b>을 찍은 뒤
@@ -316,7 +316,7 @@ export default function ScanPage() {
                   type="button"
                   onClick={() => setSelectedId(f.id)}
                   aria-pressed={selected}
-                  className={`overflow-hidden rounded-xl bg-white text-left ring-2 transition active:scale-[0.98] ${selected ? 'ring-brand-600' : 'ring-transparent'}`}
+                  className={`overflow-hidden rounded-xl bg-white text-left ring-2 transition active:scale-[0.98] ${selected ? 'ring-slate-950' : 'ring-transparent'}`}
                 >
                   <div className="relative">
                     <img src={f.thumb} alt={`${i + 1}위 장면`} className="aspect-[3/4] w-full object-cover" />
@@ -381,7 +381,7 @@ export default function ScanPage() {
             </div>
           )}
           {ocr.status === 'done' && (
-            <p className="rounded-xl bg-brand-50 p-3 text-sm text-brand-700">
+            <p className="rounded-2xl bg-slate-100 p-3 text-sm text-slate-700">
               글자 인식 완료 (인식 신뢰도 {ocr.confidence}%). 사진과 비교해 틀린 글자를 고친 뒤 등록하세요.
             </p>
           )}
