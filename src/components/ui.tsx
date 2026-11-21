@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from 'react'
+import { type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes, useEffect, useRef } from 'react'
 
 /* 공통 UI 부품. 새 화면은 가능하면 이 부품들로 조립한다. */
 
@@ -144,8 +144,30 @@ export function EmptyState({ icon, title, description }: { icon?: ReactNode; tit
   )
 }
 
+/** 시트가 열릴 때 방문 기록에 넣는 표시. 휴대폰 뒤로 가기를 누르면 화면 이동 대신 시트만 닫는다 */
+const SHEET_STATE = 'adcheckSheet'
+
 /** 화면 아래에서 올라오는 시트 (추가/수정 폼 등에 사용) */
 export function BottomSheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children: ReactNode }) {
+  const onCloseRef = useRef(onClose)
+  useEffect(() => {
+    onCloseRef.current = onClose
+  })
+
+  useEffect(() => {
+    if (!open) return
+    window.history.pushState({ ...window.history.state, [SHEET_STATE]: true }, '')
+    const onPop = (e: PopStateEvent) => {
+      if (!e.state?.[SHEET_STATE]) onCloseRef.current()
+    }
+    window.addEventListener('popstate', onPop)
+    return () => {
+      window.removeEventListener('popstate', onPop)
+      // 닫기 버튼 등으로 닫았으면 넣어 둔 기록 한 칸을 되돌린다
+      if (window.history.state?.[SHEET_STATE]) window.history.back()
+    }
+  }, [open])
+
   if (!open) return null
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50" onClick={onClose}>

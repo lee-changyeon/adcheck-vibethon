@@ -1,5 +1,7 @@
-import { CheckCircle2, RotateCcw, XCircle } from 'lucide-react'
+import { CheckCircle2, ChevronRight, ExternalLink, Trash2, XCircle } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Button, Card, SectionTitle } from '../components/ui'
+import { APP_INFO, STORAGE_PREFIX } from '../data/app'
 
 const RULES: { title: string; desc: string; good: string; bad: string }[] = [
   {
@@ -31,8 +33,14 @@ const RULES: { title: string; desc: string; good: string; bad: string }[] = [
 /** 기능 ④: 표시 규칙 가이드 + 앱 정보 */
 export default function GuidePage() {
   const reset = () => {
-    if (confirm('점검 이력과 입력 중인 글을 지우고 샘플 데이터로 되돌릴까요?')) {
-      localStorage.clear()
+    if (confirm('점검 이력과 입력 중인 글을 모두 지울까요? 지운 기록은 되돌릴 수 없어요.')) {
+      try {
+        Object.keys(localStorage)
+          .filter((k) => k.startsWith(STORAGE_PREFIX))
+          .forEach((k) => localStorage.removeItem(k))
+      } catch {
+        /* 저장소를 쓸 수 없는 환경이면 지울 것도 없다 */
+      }
       location.assign('/')
     }
   }
@@ -67,18 +75,56 @@ export default function GuidePage() {
       </section>
 
       <section>
+        <SectionTitle>점검 기준 출처</SectionTitle>
+        <Card className="space-y-2 text-sm leading-relaxed text-slate-600">
+          <p>
+            점검 규칙은 공정거래위원회 고시 「추천·보증 등에 관한 표시·광고 심사지침」의 표시 방법을 요약해 만들었어요.
+          </p>
+          <a
+            href={APP_INFO.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-11 items-center gap-1.5 font-semibold text-slate-900 underline underline-offset-2"
+          >
+            국가법령정보센터에서 원문 보기 <ExternalLink size={15} />
+          </a>
+          <p className="text-slate-500">
+            {APP_INFO.name}는 공정거래위원회 등 정부 기관과 관계없는 개인 개발 앱이며, 정부를 대표하지 않아요.
+          </p>
+        </Card>
+      </section>
+
+      <section>
         <SectionTitle>앱 정보</SectionTitle>
         <Card className="space-y-1 text-sm text-slate-600">
           <p>
-            <b className="text-slate-900">애드체크</b> v1.0 · 뒷광고 예방 체크기
+            <b className="text-slate-900">{APP_INFO.name}</b> v{APP_INFO.version} · 뒷광고 예방 체크기
           </p>
           <p>이 앱의 점검 결과는 심사지침을 바탕으로 한 참고용이며, 법률 자문이 아니에요.</p>
-          <p className="text-slate-400">2026 계명문화대학교 바이브톤 출품작 · SNS마케팅 전공</p>
+          <p>
+            문의:{' '}
+            {APP_INFO.contactEmail ? (
+              <a className="font-semibold text-slate-900 underline" href={`mailto:${APP_INFO.contactEmail}`}>
+                {APP_INFO.contactEmail}
+              </a>
+            ) : (
+              '준비 중'
+            )}
+          </p>
+          <p className="text-slate-400">계명문화대학교 SNS마케팅 전공 · 2026 바이브톤에서 처음 만들었어요</p>
         </Card>
-        <Button variant="secondary" full onClick={reset} className="mt-3">
-          <RotateCcw size={16} /> 샘플 데이터로 초기화 (시연 전에 사용)
+        <Link
+          to="/privacy"
+          className="mt-3 flex min-h-12 items-center justify-between rounded-2xl bg-white px-4 text-sm font-semibold text-slate-900 ring-1 ring-slate-200 active:scale-[0.99]"
+        >
+          개인정보 처리방침 <ChevronRight size={18} className="text-slate-400" />
+        </Link>
+        <p className="mt-3 text-xs leading-relaxed text-slate-400">
+          입력한 글과 점검 기록은 이 휴대폰 안에만 저장되고 어디로도 보내지 않아요.
+        </p>
+        <Button variant="ghost" full onClick={reset} className="mt-2 text-red-600">
+          <Trash2 size={16} /> 모든 기록 지우기
         </Button>
-        <p className="mt-2 text-xs text-slate-400">데이터는 이 휴대폰 브라우저에만 저장돼요.</p>
       </section>
     </div>
   )

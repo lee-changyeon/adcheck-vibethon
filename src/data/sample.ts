@@ -1,7 +1,7 @@
 import { runCheck } from './rules'
 import type { CheckInput, CheckRecord } from './types'
 
-/** 점검 화면의 "예시 글" 버튼 (시연용) */
+/** 점검 화면의 "예시 글로 체험하기" 버튼 */
 export const EXAMPLES: { label: string; input: CheckInput }[] = [
   {
     label: '해시태그 끝에 #협찬',
@@ -60,57 +60,6 @@ export const EXAMPLES: { label: string; input: CheckInput }[] = [
   },
 ]
 
-/** 이력·통계 화면에 처음 보여 줄 샘플 이력 (오늘 기준 며칠 전) */
-const HISTORY_SEED: { daysAgo: number; input: CheckInput }[] = [
-  { daysAgo: 6, input: EXAMPLES[1].input },
-  {
-    daysAgo: 6,
-    input: {
-      platform: 'instagram',
-      reward: 'product',
-      brand: '서문시장 납작만두',
-      text: `서문시장 야시장 필수 코스 🥟
-바삭한 납작만두에 양념 듬뿍! 줄 서도 먹을 가치 있어요
-
-#대구여행 #서문시장 #야시장 #납작만두 #대구맛집 #먹스타그램 #협찬`,
-    },
-  },
-  {
-    daysAgo: 5,
-    input: {
-      platform: 'youtube',
-      reward: 'cash',
-      brand: '핏업짐',
-      text: `대학생 3개월 헬스 브이로그 | 다이어트 전후 공개
-설명란: 영상에 나온 헬스장 정보는 아래에 있어요.
-이 영상은 핏업짐으로부터 소정의 원고료를 받아 제작되었습니다.`,
-    },
-  },
-  { daysAgo: 4, input: EXAMPLES[2].input },
-  {
-    daysAgo: 3,
-    input: {
-      platform: 'instagram',
-      reward: 'product',
-      brand: '동성로 꽃집 플로라',
-      text: `생일 선물로 받은 꽃다발 💐 색감이 너무 예뻐요
-#thanksto플로라 #꽃스타그램 #동성로꽃집`,
-    },
-  },
-  {
-    daysAgo: 2,
-    input: {
-      platform: 'blog',
-      reward: 'product',
-      brand: '앞산 캠핑장',
-      text: `[협찬] 앞산 글램핑 1박 후기 - 대구 근교 캠핑 추천
-앞산 캠핑장으로부터 숙박을 무상으로 제공받아 작성한 글입니다.
-도심에서 20분이면 도착하는데 공기가 완전히 달라요.`,
-    },
-  },
-  { daysAgo: 1, input: EXAMPLES[3].input },
-]
-
 export function makeRecord(input: CheckInput, createdAt: Date = new Date()): CheckRecord {
   const r = runCheck(input)
   return {
@@ -121,10 +70,4 @@ export function makeRecord(input: CheckInput, createdAt: Date = new Date()): Che
     verdict: r.verdict,
     issueCodes: r.issues.map((i) => i.code),
   }
-}
-
-/** 최신순 샘플 이력 */
-export function sampleHistory(): CheckRecord[] {
-  const now = Date.now()
-  return HISTORY_SEED.map(({ daysAgo, input }, i) => makeRecord(input, new Date(now - daysAgo * 86_400_000 - i * 3_600_000))).reverse()
 }
