@@ -82,7 +82,7 @@ function CreatorDb() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="이름·계정·메모 검색"
-          className="w-full rounded-full border border-transparent bg-slate-100 py-3 pl-10 pr-4 text-base outline-none focus:border-slate-950 focus:bg-white focus:ring-2 focus:ring-slate-200"
+          className="w-full rounded-3xl border-2 border-transparent bg-slate-100 in-data-[surface=soft]:bg-white py-3 pl-10 pr-4 text-base outline-none placeholder:text-slate-500 focus:border-slate-950 focus:bg-white focus:ring-[6px] focus:ring-slate-100"
         />
       </label>
       <ScrollChips options={fieldOptions} value={field} onChange={setField} />

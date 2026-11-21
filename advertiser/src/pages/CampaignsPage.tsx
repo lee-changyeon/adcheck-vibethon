@@ -51,7 +51,7 @@ export default function CampaignsPage() {
                     setCurrentId(c.id)
                     navigate('/')
                   }}
-                  className={`flex items-center gap-3 ${selected ? 'ring-2 ring-brand-500' : ''}`}
+                  className={`flex items-center gap-3 ${selected ? 'ring-2 ring-inset ring-brand-600' : ''}`}
                 >
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-semibold">{c.name}</p>

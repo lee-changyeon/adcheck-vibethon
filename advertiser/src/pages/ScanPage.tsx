@@ -216,7 +216,7 @@ export default function ScanPage() {
       <CampaignSwitcher campaigns={campaigns} value={current.id} onChange={setCurrentId} />
 
       {error && (
-        <div className="flex gap-2 rounded-xl bg-red-50 p-3 text-sm text-red-700 ring-1 ring-red-100" role="alert">
+        <div className="flex gap-2 bg-slate-100 p-3 pl-4 text-sm text-red-700 shadow-[inset_3px_0_0_var(--color-red-600)]" role="alert">
           <AlertTriangle size={18} className="mt-0.5 shrink-0" />
           <p>{error}</p>
         </div>
@@ -370,7 +370,7 @@ export default function ScanPage() {
             </Card>
           )}
           {ocr.status === 'error' && (
-            <div className="flex gap-2 rounded-xl bg-amber-50 p-3 text-sm text-amber-800 ring-1 ring-amber-100" role="alert">
+            <div className="flex gap-2 bg-slate-100 p-3 pl-4 text-sm text-amber-800 shadow-[inset_3px_0_0_var(--color-amber-600)]" role="alert">
               <AlertTriangle size={18} className="mt-0.5 shrink-0" />
               <div className="space-y-2">
                 <p>{ocr.message}</p>

@@ -9,7 +9,7 @@
 
 ## 기술 스택 (바꾸지 말 것)
 - Vite + React 19 + TypeScript
-- Tailwind CSS v4 (설정 파일 없음, `src/index.css`의 `@theme`에서 색/폰트 관리). 대표 색은 청록(brand-600 `#0f766e`)
+- Tailwind CSS v4 (설정 파일 없음, `src/index.css`의 `@theme`에서 색/폰트 관리). 대표 색은 잉크 검정(brand-600 `#111111`), 빨강 `#d30005`는 위반 신호에만. 디자인 토큰은 크리에이터용 앱 `../src/index.css`와 같게 유지
 - react-router-dom (BrowserRouter), 아이콘은 lucide-react, 차트는 recharts
 - 글자 인식(OCR): tesseract.js 7.0.0 (브라우저 안에서 한글 인식, 서버·API 키 불필요)
 - 데이터는 `useLocalStorage` 훅으로 브라우저에 저장 (키 접두어 `adcheckbiz.`)

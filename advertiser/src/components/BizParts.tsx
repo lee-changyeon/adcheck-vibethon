@@ -12,7 +12,7 @@ export function CampaignSwitcher({ campaigns, value, onChange }: { campaigns: Ca
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none rounded-2xl border border-slate-300 bg-white py-3 pl-4 pr-10 text-base font-semibold outline-none focus:border-slate-950"
+        className="min-h-12 w-full appearance-none rounded-3xl border-2 border-transparent bg-slate-100 in-data-[surface=soft]:bg-white py-3 pl-5 pr-12 text-base font-semibold outline-none focus:border-slate-950 focus:bg-white focus:ring-[6px] focus:ring-slate-100"
       >
         {campaigns.map((c) => (
           <option key={c.id} value={c.id}>
@@ -20,7 +20,7 @@ export function CampaignSwitcher({ campaigns, value, onChange }: { campaigns: Ca
           </option>
         ))}
       </select>
-      <ChevronDown size={18} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+      <ChevronDown size={18} className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-slate-950" />
     </label>
   )
 }
@@ -35,21 +35,21 @@ export function StatusBadge({ status }: { status: ActionStatus }) {
 }
 
 const SEVERITY_STYLE: Record<Severity, { icon: typeof ShieldAlert; box: string; color: string; label: string }> = {
-  danger: { icon: ShieldAlert, box: 'bg-red-50 ring-red-100', color: 'text-red-600', label: '위반' },
-  warning: { icon: AlertTriangle, box: 'bg-amber-50 ring-amber-100', color: 'text-amber-600', label: '보완' },
-  tip: { icon: Lightbulb, box: 'bg-slate-50 ring-slate-100', color: 'text-slate-500', label: '팁' },
+  danger: { icon: ShieldAlert, box: 'bg-white shadow-[inset_3px_0_0_var(--color-red-600)]', color: 'text-red-600', label: '위반' },
+  warning: { icon: AlertTriangle, box: 'bg-white shadow-[inset_3px_0_0_var(--color-amber-600)]', color: 'text-amber-600', label: '보완' },
+  tip: { icon: Lightbulb, box: 'bg-white shadow-[inset_3px_0_0_var(--color-slate-400)]', color: 'text-slate-500', label: '팁' },
 }
 
 /** 문제 항목 목록 (짧은 형태) */
 export function IssueList({ issues }: { issues: Issue[] }) {
-  if (issues.length === 0) return <p className="rounded-xl bg-green-50 p-3 text-sm font-medium text-green-700">광고 표시 규칙을 잘 지킨 게시물이에요.</p>
+  if (issues.length === 0) return <p className="bg-white p-3 pl-4 text-sm font-medium text-green-700 shadow-[inset_3px_0_0_var(--color-green-700)]">광고 표시 규칙을 잘 지킨 게시물이에요.</p>
   return (
     <div className="space-y-2">
       {issues.map((i) => {
         const s = SEVERITY_STYLE[i.severity]
         const Icon = s.icon
         return (
-          <div key={i.code} className={`flex gap-2.5 rounded-xl p-3 ring-1 ${s.box}`}>
+          <div key={i.code} className={`flex gap-2.5 p-3 pl-4 ${s.box}`}>
             <Icon size={18} className={`mt-0.5 shrink-0 ${s.color}`} />
             <div className="min-w-0 text-sm">
               <p className="font-semibold">
@@ -58,7 +58,7 @@ export function IssueList({ issues }: { issues: Issue[] }) {
               </p>
               {i.found && (
                 <p className="mt-0.5 text-slate-600">
-                  문제 표현: <mark className="rounded bg-white px-1 font-semibold">{i.found}</mark>
+                  문제 표현: <mark className="bg-transparent px-0.5 font-semibold text-slate-950 underline decoration-red-600 decoration-2 underline-offset-2">{i.found}</mark>
                 </p>
               )}
             </div>

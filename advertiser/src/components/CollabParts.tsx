@@ -87,7 +87,7 @@ export function CreatorForm({
                 aria-label="SNS 종류"
                 value={a.kind}
                 onChange={(e) => setAccount(i, { kind: e.target.value as SnsKind })}
-                className="w-24 shrink-0 rounded-2xl border border-slate-300 bg-white px-2 text-base outline-none focus:border-slate-950"
+                className="w-24 shrink-0 rounded-3xl border-2 border-transparent bg-slate-100 in-data-[surface=soft]:bg-white px-3 text-base outline-none focus:border-slate-950 focus:bg-white focus:ring-[6px] focus:ring-slate-100"
               >
                 {SNS_KINDS.map((k) => (
                   <option key={k} value={k}>
@@ -100,13 +100,13 @@ export function CreatorForm({
                 placeholder="@계정"
                 value={a.handle}
                 onChange={(e) => setAccount(i, { handle: e.target.value })}
-                className="min-w-0 flex-1 rounded-2xl border border-slate-300 bg-white px-3 py-3 text-base outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                className="min-w-0 flex-1 rounded-3xl border-2 border-transparent bg-slate-100 in-data-[surface=soft]:bg-white px-4 py-3 text-base outline-none placeholder:text-slate-500 focus:border-slate-950 focus:bg-white focus:ring-[6px] focus:ring-slate-100"
               />
               <button
                 type="button"
                 aria-label="계정 빼기"
                 onClick={() => setAccounts((as) => as.filter((_, j) => j !== i))}
-                className="flex w-11 shrink-0 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100"
+                className="flex size-11 shrink-0 items-center justify-center self-center rounded-full text-slate-500 hover:bg-slate-100"
               >
                 <X size={18} />
               </button>

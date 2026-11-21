@@ -55,7 +55,7 @@ export default function PostsPage() {
         <div className="space-y-2">
           {shown.map(({ post, result }) => (
             <Card key={post.id} onClick={() => setOpenId(post.id)} className="flex items-center gap-3">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-lg font-bold">{result.score}</div>
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-lg font-bold">{result.score}</div>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-semibold">{post.influencer}</p>
                 <p className="mt-0.5 truncate text-xs text-slate-400">
@@ -177,7 +177,7 @@ function PostDetail({ post, campaign, onUpdate, onDelete }: { post: Post; campai
 
       <div>
         <p className="mb-1 text-sm font-semibold text-slate-600">게시물 글</p>
-        <pre className="max-h-40 overflow-auto whitespace-pre-wrap rounded-xl bg-slate-50 p-3 font-sans text-sm leading-relaxed">{post.text}</pre>
+        <pre className="max-h-40 overflow-auto whitespace-pre-wrap bg-slate-100 p-4 font-sans text-sm leading-relaxed">{post.text}</pre>
       </div>
 
       <div>
@@ -189,7 +189,7 @@ function PostDetail({ post, campaign, onUpdate, onDelete }: { post: Post; campai
         <>
           <div>
             <SectionTitle>수정 요청 메시지</SectionTitle>
-            <pre className="max-h-56 overflow-auto whitespace-pre-wrap rounded-xl bg-brand-50 p-3 font-sans text-sm leading-relaxed">{message}</pre>
+            <pre className="max-h-56 overflow-auto whitespace-pre-wrap bg-slate-100 p-4 font-sans text-sm leading-relaxed">{message}</pre>
             <Button full className="mt-2" onClick={copyMessage}>
               {copied ? <Check size={16} /> : <Copy size={16} />} {copied ? '복사됨 · 수정 요청함으로 표시' : '메시지 복사 (DM·카톡으로 전달)'}
             </Button>

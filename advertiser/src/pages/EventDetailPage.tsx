@@ -270,7 +270,7 @@ function DmPanel({
         {creators.length === 0 ? (
           <EmptyState icon={<Users size={36} />} title="크리에이터 DB가 비어 있어요" description="협업 탭 → 크리에이터 DB에서 먼저 등록해 주세요" />
         ) : (
-          <div className="mt-3 divide-y divide-slate-100 overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
+          <div className="mt-3 divide-y divide-slate-300 border-y border-slate-300 bg-white">
             {filtered.map((c) => {
               const on = selected.includes(c.id)
               const target = dmTarget(c)
@@ -335,17 +335,17 @@ function DmPanel({
             </div>
             {previewPool.length > 1 && (
               <div className="flex items-center gap-1 text-xs text-slate-500">
-                <button aria-label="이전 사람" onClick={() => setPreviewIdx((idx - 1 + previewPool.length) % previewPool.length)} className="flex size-9 items-center justify-center rounded-lg ring-1 ring-slate-200">
+                <button aria-label="이전 사람" onClick={() => setPreviewIdx((idx - 1 + previewPool.length) % previewPool.length)} className="flex size-10 items-center justify-center rounded-full bg-slate-100 active:opacity-50">
                   <ChevronLeft size={16} />
                 </button>
                 {idx + 1}/{previewPool.length}
-                <button aria-label="다음 사람" onClick={() => setPreviewIdx((idx + 1) % previewPool.length)} className="flex size-9 items-center justify-center rounded-lg ring-1 ring-slate-200">
+                <button aria-label="다음 사람" onClick={() => setPreviewIdx((idx + 1) % previewPool.length)} className="flex size-10 items-center justify-center rounded-full bg-slate-100 active:opacity-50">
                   <ChevronRight size={16} />
                 </button>
               </div>
             )}
           </div>
-          <p className="whitespace-pre-wrap rounded-2xl rounded-tl-sm bg-slate-100 p-3.5 text-sm leading-relaxed text-slate-800">{previewText}</p>
+          <p className="whitespace-pre-wrap bg-slate-100 p-4 text-sm leading-relaxed text-slate-800">{previewText}</p>
           <Button variant="secondary" full onClick={() => copy(previewText)}>
             <Copy size={16} /> 문구 복사
           </Button>
@@ -368,7 +368,7 @@ function DmPanel({
         {history.length === 0 ? (
           <EmptyState icon={<Send size={36} />} title="아직 보낸 DM이 없어요" description="받는 사람을 고르고 발송을 눌러 보세요" />
         ) : (
-          <div className="divide-y divide-slate-100 overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
+          <div className="divide-y divide-slate-300 border-y border-slate-300 bg-white">
             {history.map((d) => (
               <div key={d.id} className="flex items-center gap-3 px-4 py-2.5">
                 <div className="min-w-0 flex-1">
@@ -380,7 +380,7 @@ function DmPanel({
                     {d.to || '계정 없음'} · {formatDateTime(d.sentAt)}
                   </p>
                 </div>
-                <button aria-label={`${d.creatorName} 님에게 보낸 문구 복사`} onClick={() => copy(d.message)} className="flex size-10 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100">
+                <button aria-label={`${d.creatorName} 님에게 보낸 문구 복사`} onClick={() => copy(d.message)} className="flex size-10 shrink-0 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100">
                   <Copy size={17} />
                 </button>
               </div>
@@ -491,7 +491,7 @@ function ApplyPanel({
           <Badge color={closed ? 'slate' : 'green'}>{closed ? '마감' : remainingLabel(event.deadline, now)}</Badge>
         </div>
         <p className="text-center">
-          <span className="text-4xl font-extrabold tracking-tight tabular-nums text-slate-950">신청 {apps.length}명</span>
+          <span className="text-4xl font-black tabular-nums text-slate-950">신청 {apps.length}명</span>
           <span className="ml-1.5 text-xl font-bold text-slate-400">/ 모집 {event.capacity}명</span>
         </p>
         <ProgressBar value={(apps.length / event.capacity) * 100} className="h-3" />
@@ -566,7 +566,7 @@ function ApplyPanel({
         {ranked.length === 0 ? (
           <EmptyState icon={<Users size={36} />} title="아직 신청자가 없어요" description="DM을 보내고 신청을 받아 보세요" />
         ) : (
-          <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
+          <div className="border-y border-slate-300 bg-white">
             {ranked.map((a) => (
               <div key={a.id}>
                 {a.rank === event.capacity + 1 && (
@@ -592,7 +592,7 @@ function ApplyPanel({
                       <span className="tabular-nums">{formatClock(a.appliedAt)}</span>
                     </p>
                   </div>
-                  <button aria-label={`${a.name} 님 신청 취소`} onClick={() => cancel(a)} className="flex size-10 shrink-0 items-center justify-center rounded-lg text-slate-300 hover:bg-slate-100 hover:text-slate-500">
+                  <button aria-label={`${a.name} 님 신청 취소`} onClick={() => cancel(a)} className="flex size-10 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-950">
                     <X size={17} />
                   </button>
                 </div>

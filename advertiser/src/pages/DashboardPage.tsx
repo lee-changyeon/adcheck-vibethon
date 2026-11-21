@@ -7,9 +7,10 @@ import { evaluate, needsAction, PAID_REWARD_LABEL } from '../data/biz'
 import { PLATFORM_LABEL, type Verdict } from '../data/types'
 import { useBiz } from '../hooks/useBiz'
 
-const VERDICT_FILL: Record<Verdict, string> = { 적합: '#16a34a', '보완 필요': '#d97706', '위반 위험': '#dc2626' }
-const INK_MUTED = '#62625b'
-const GRID = '#e5e5e0'
+const VERDICT_FILL: Record<Verdict, string> = { 적합: '#007d48', '보완 필요': '#d97706', '위반 위험': '#d30005' }
+const INK = '#111111'
+const INK_MUTED = '#707072'
+const GRID = '#e5e5e5'
 
 /** 기능 ④: 캠페인 대시보드 */
 export default function DashboardPage() {
@@ -39,11 +40,11 @@ export default function DashboardPage() {
       <section className="grid grid-cols-3 gap-2">
         <Card className="text-center">
           <p className="text-xs text-slate-500">게시물</p>
-          <p className="mt-1 text-2xl font-extrabold tracking-tight">{total}</p>
+          <p className="mt-1 text-3xl font-bold">{total}</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">준수율</p>
-          <p className="mt-1 text-2xl font-extrabold tracking-tight">{rate}%</p>
+          <p className="mt-1 text-3xl font-bold">{rate}%</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">조치 필요</p>
@@ -63,9 +64,9 @@ export default function DashboardPage() {
                   <BarChart data={chart} layout="vertical" margin={{ top: 0, right: 36, bottom: 0, left: 8 }} barCategoryGap={10}>
                     <CartesianGrid horizontal={false} stroke={GRID} />
                     <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: INK_MUTED }} axisLine={false} tickLine={false} />
-                    <YAxis type="category" dataKey="name" width={72} tick={{ fontSize: 13, fill: '#33332e' }} axisLine={false} tickLine={false} />
+                    <YAxis type="category" dataKey="name" width={72} tick={{ fontSize: 13, fill: INK }} axisLine={false} tickLine={false} />
                     <Tooltip formatter={(v) => [`${v}개`, '게시물']} contentStyle={{ borderRadius: 12, border: `1px solid ${GRID}`, fontSize: 13 }} />
-                    <Bar dataKey="게시물" animationDuration={500} radius={[0, 4, 4, 0]} label={{ position: 'right', fontSize: 12, fill: '#33332e', formatter: (v: unknown) => `${v}개` }}>
+                    <Bar dataKey="게시물" animationDuration={500} radius={0} label={{ position: 'right', fontSize: 12, fill: INK, formatter: (v: unknown) => `${v}개` }}>
                       {chart.map((d) => (
                         <Cell key={d.name} fill={VERDICT_FILL[d.name as Verdict]} />
                       ))}
