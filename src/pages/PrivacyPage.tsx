@@ -7,7 +7,7 @@ import { APP_INFO } from '../data/app'
 function Item({ n, title, children }: { n: number; title: string; children: ReactNode }) {
   return (
     <section className="space-y-1">
-      <h3 className="font-bold text-slate-950">
+      <h3 className="font-semibold text-slate-950">
         {n}. {title}
       </h3>
       <div className="text-sm leading-relaxed text-slate-600">{children}</div>
@@ -27,8 +27,8 @@ export default function PrivacyPage() {
       </Button>
 
       <div>
-        <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">개인정보 처리방침</h2>
-        <p className="mt-1 text-sm text-slate-400">시행일: {APP_INFO.privacyEffectiveDate}</p>
+        <h2 className="text-2xl font-bold text-slate-950">개인정보 처리방침</h2>
+        <p className="mt-1 text-sm text-slate-500">시행일: {APP_INFO.privacyEffectiveDate}</p>
       </div>
 
       <Card className="space-y-5">

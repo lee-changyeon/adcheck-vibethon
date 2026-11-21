@@ -26,6 +26,11 @@ export default defineConfig({
         background_color: '#ffffff',
         theme_color: '#ffffff',
         categories: ['business', 'productivity', 'utilities'],
+        // 홈 화면 아이콘을 길게 누르면 나오는 바로가기
+        shortcuts: [
+          { name: '점검하기', short_name: '점검', url: '/check', icons: [{ src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }] },
+          { name: '점검 이력', short_name: '이력', url: '/history', icons: [{ src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }] },
+        ],
         icons: [
           { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
           { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },

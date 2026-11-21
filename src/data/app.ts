@@ -1,7 +1,7 @@
 /** 앱 정보 (가이드·개인정보 처리방침 화면에서 함께 쓴다) */
 export const APP_INFO = {
   name: '애드체크',
-  version: '1.1.0',
+  version: '1.3.0',
   /** 공개 연락처 (스토어·처리방침에 공개되는 앱 전용 주소). 비우면 화면에 "준비 중"으로 표시 */
   contactEmail: 'ion.adcheck@gmail.com',
   /** 개인정보 처리방침 시행일 */

@@ -1,39 +1,51 @@
 @import 'tailwindcss';
 
 /* 앱 대표 색은 여기서만 바꾼다 (brand-50 ~ brand-700)
-   v2 디자인: 따뜻한 크림색 중립 바탕 + 빨강 강조는 주요 버튼·활성 탭에만 */
+   v3 디자인: 검정·흰색·연회색 세 가지가 화면 대부분을 맡는다.
+   색은 꼭 알려야 할 신호(위반 빨강·적합 초록·보완 주황)에만 쓴다 */
 @theme {
   /* Pretendard의 영문은 Inter 기반 → Inter 계열 느낌 + 한글 */
   --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
-  /* 강조색: 600(주요 버튼·활성 탭), 700(누른 상태). 50·100·500은 중립색으로 두어 강조를 아낀다 */
-  --color-brand-50: #f6f6f3;
-  --color-brand-100: #e5e5e0;
-  --color-brand-500: #262622;
-  --color-brand-600: #e60023;
-  --color-brand-700: #cc001f;
+  /* 대표색 = 잉크 검정. 600(주요 버튼·활성 탭), 700(누른 상태), 50·100은 연회색 면 */
+  --color-brand-50: #f5f5f5;
+  --color-brand-100: #e5e5e5;
+  --color-brand-500: #111111;
+  --color-brand-600: #111111;
+  --color-brand-700: #39393b;
 
-  /* 중립색(slate)을 크림 톤으로 덮어쓴다: 바탕·선·글자 전부 이 단계에서 나온다 */
-  --color-slate-50: #fbfbf9;
-  --color-slate-100: #f6f6f3;
-  --color-slate-200: #e5e5e0;
-  --color-slate-300: #dadad3;
-  --color-slate-400: #91918c;
-  --color-slate-500: #767670;
-  --color-slate-600: #62625b;
-  --color-slate-700: #4a4a44;
-  --color-slate-800: #3b3b35;
-  --color-slate-900: #33332e;
-  --color-slate-950: #262622;
+  /* 중립색(slate)을 순수 회색으로 덮어쓴다: 바탕·선·글자 전부 이 단계에서 나온다
+     100 연회색 면 · 200 연한 선 · 300 구분선 · 500 보조 글자 · 900/950 잉크 */
+  --color-slate-50: #fafafa;
+  --color-slate-100: #f5f5f5;
+  --color-slate-200: #e5e5e5;
+  --color-slate-300: #cacacb;
+  --color-slate-400: #9e9ea0;
+  --color-slate-500: #707072;
+  --color-slate-600: #4b4b4d;
+  --color-slate-700: #39393b;
+  --color-slate-800: #242425;
+  --color-slate-900: #111111;
+  --color-slate-950: #111111;
 
-  /* 모서리는 16px(버튼·입력·카드) / 32px(큰 카드·바텀시트) / pill 세 가지만 */
-  --radius-lg: 16px;
-  --radius-xl: 16px;
-  --radius-2xl: 16px;
-  --radius-3xl: 32px;
+  /* 신호색: 위반(빨강)·적합(초록)만 디자인 기준값으로 맞춘다 */
+  --color-red-500: #d30005;
+  --color-red-600: #d30005;
+  --color-red-700: #b00004;
+  --color-red-800: #780700;
+  --color-green-600: #007d48;
+  --color-green-700: #007d48;
+  --color-green-800: #00603a;
 
-  /* 그림자는 모달·바텀시트에만: 작은 그림자는 없앤다 */
+  /* 모서리: 카드·구역 같은 틀은 0px(각진 모양) · 입력 칸·바텀시트 24px · 버튼·칩·배지는 rounded-full(알약) */
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 24px;
+
+  /* 그림자는 쓰지 않는다 (바텀시트만 예외). 깊이는 1px 구분선으로만 */
   --shadow-sm: 0 0 #0000;
+  --shadow-lg: 0 0 #0000;
 }
 
 /* 가로로 넘기는 칩 목록의 스크롤 막대 숨기기 */

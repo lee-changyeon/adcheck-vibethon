@@ -61,12 +61,12 @@ export default function GuidePage() {
         <div className="space-y-3">
           {RULES.map((r) => (
             <Card key={r.title} className="space-y-2">
-              <p className="font-bold">{r.title}</p>
+              <p className="font-semibold text-slate-950">{r.title}</p>
               <p className="text-sm leading-relaxed text-slate-600">{r.desc}</p>
-              <p className="flex gap-2 rounded-xl bg-green-50 p-2.5 text-sm text-green-800">
+              <p className="flex gap-2 bg-white p-3 text-sm text-green-800 shadow-[inset_2px_0_0_var(--color-green-700)]">
                 <CheckCircle2 size={16} className="mt-0.5 shrink-0" /> {r.good}
               </p>
-              <p className="flex gap-2 rounded-xl bg-red-50 p-2.5 text-sm text-red-800">
+              <p className="flex gap-2 bg-white p-3 text-sm text-red-800 shadow-[inset_2px_0_0_var(--color-red-600)]">
                 <XCircle size={16} className="mt-0.5 shrink-0" /> {r.bad}
               </p>
             </Card>
@@ -111,15 +111,15 @@ export default function GuidePage() {
               '준비 중'
             )}
           </p>
-          <p className="text-slate-400">계명문화대학교 SNS마케팅 전공 · 2026 바이브톤에서 처음 만들었어요</p>
+          <p className="text-slate-500">계명문화대학교 SNS마케팅 전공 · 2026 바이브톤에서 처음 만들었어요</p>
         </Card>
         <Link
           to="/privacy"
-          className="mt-3 flex min-h-12 items-center justify-between rounded-2xl bg-white px-4 text-sm font-semibold text-slate-900 ring-1 ring-slate-200 active:scale-[0.99]"
+          className="mt-3 flex min-h-14 items-center justify-between border-y border-slate-300 text-base font-medium text-slate-950 active:opacity-50"
         >
-          개인정보 처리방침 <ChevronRight size={18} className="text-slate-400" />
+          개인정보 처리방침 <ChevronRight size={18} className="text-slate-950" />
         </Link>
-        <p className="mt-3 text-xs leading-relaxed text-slate-400">
+        <p className="mt-3 text-xs leading-relaxed text-slate-500">
           입력한 글과 점검 기록은 이 휴대폰 안에만 저장되고 어디로도 보내지 않아요.
         </p>
         <Button variant="ghost" full onClick={reset} className="mt-2 text-red-600">

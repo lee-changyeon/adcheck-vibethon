@@ -1,4 +1,5 @@
-import { History, Trash2 } from 'lucide-react'
+import { History, ScanSearch, Trash2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import ResultView from '../components/ResultView'
 import { Badge, BottomSheet, Button, Card, EmptyState } from '../components/ui'
@@ -21,7 +22,11 @@ export default function HistoryPage() {
   const [open, setOpen] = useState<CheckRecord | null>(null)
 
   if (history.length === 0) {
-    return <EmptyState icon={<History size={40} />} title="아직 점검한 글이 없어요" description="점검 탭에서 올릴 글을 점검해 보세요" />
+    return <EmptyState icon={<History size={40} />} title="아직 점검한 글이 없어요" description="점검 탭에서 올릴 글을 점검해 보세요"
+        action={
+          <Link to="/check" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand-600 px-6 text-base font-medium text-white transition active:scale-[0.97] active:opacity-50"><ScanSearch size={18} /> 점검하러 가기</Link>
+        }
+      />
   }
 
   const remove = (id: string) => {
@@ -34,10 +39,10 @@ export default function HistoryPage() {
       <p className="mb-3 text-sm text-slate-500">지금까지 {history.length}개의 글을 점검했어요. 누르면 자세히 볼 수 있어요.</p>
       {history.map((r) => (
         <Card key={r.id} onClick={() => setOpen(r)} className="flex items-center gap-3">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-lg font-bold">{r.score}</div>
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-lg font-bold">{r.score}</div>
           <div className="min-w-0 flex-1">
-            <p className="truncate font-semibold">{r.text.trim().split('\n')[0]}</p>
-            <p className="mt-0.5 truncate text-xs text-slate-400">
+            <p className="truncate font-medium text-slate-950">{r.text.trim().split('\n')[0]}</p>
+            <p className="mt-0.5 truncate text-xs text-slate-500">
               {when(r.createdAt)} · {PLATFORM_LABEL[r.platform]} · {r.brand || REWARD_LABEL[r.reward]}
             </p>
           </div>
@@ -48,13 +53,13 @@ export default function HistoryPage() {
       <BottomSheet open={open !== null} onClose={() => setOpen(null)} title="점검 상세">
         {open && (
           <div className="max-h-[70svh] space-y-4 overflow-y-auto">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               {when(open.createdAt)} · {PLATFORM_LABEL[open.platform]} · {REWARD_LABEL[open.reward]}
               {open.brand && ` · ${open.brand}`}
             </p>
             <div>
               <p className="mb-1 text-sm font-semibold text-slate-600">원래 글</p>
-              <pre className="whitespace-pre-wrap rounded-xl bg-slate-50 p-3 font-sans text-sm leading-relaxed">{open.text}</pre>
+              <pre className="whitespace-pre-wrap bg-slate-100 p-4 font-sans text-sm leading-relaxed">{open.text}</pre>
             </div>
             <ResultView result={runCheck(open)} />
             <Button variant="ghost" full onClick={() => remove(open.id)} className="text-red-600">

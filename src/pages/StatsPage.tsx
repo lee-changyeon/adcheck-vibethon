@@ -1,13 +1,14 @@
-import { BarChart3 } from 'lucide-react'
+import { BarChart3, ScanSearch } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Card, EmptyState, SectionTitle } from '../components/ui'
 import { ISSUE_SHORT, type IssueCode } from '../data/types'
 import { useHistory } from '../hooks/useHistory'
 
-const BRAND = '#33332e' // 본문색: 가장 많이 틀린 항목만 진하게
-const MUTED_BAR = '#dadad3' // 크림 톤 연한 막대
-const INK_MUTED = '#62625b' // 보조 글자색
-const GRID = '#e5e5e0' // 연한 선
+const BRAND = '#111111' // 잉크 검정: 가장 많이 틀린 항목만 진하게
+const MUTED_BAR = '#cacacb' // 연회색 막대
+const INK_MUTED = '#707072' // 보조 글자색
+const GRID = '#e5e5e5' // 연한 선
 
 const TIPS: Record<IssueCode, string> = {
   NO_DISCLOSURE: '대가를 받았다면 "광고"나 "협찬"을 꼭 적으세요.',
@@ -23,7 +24,11 @@ export default function StatsPage() {
   const [history] = useHistory()
 
   if (history.length === 0) {
-    return <EmptyState icon={<BarChart3 size={40} />} title="통계를 낼 점검 기록이 없어요" description="점검 탭에서 글을 점검하면 통계가 쌓여요" />
+    return <EmptyState icon={<BarChart3 size={40} />} title="통계를 낼 점검 기록이 없어요" description="점검 탭에서 글을 점검하면 통계가 쌓여요"
+        action={
+          <Link to="/check" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand-600 px-6 text-base font-medium text-white transition active:scale-[0.97] active:opacity-50"><ScanSearch size={18} /> 점검하러 가기</Link>
+        }
+      />
   }
 
   const total = history.length
@@ -41,15 +46,15 @@ export default function StatsPage() {
       <section className="grid grid-cols-3 gap-2">
         <Card className="text-center">
           <p className="text-xs text-slate-500">점검한 글</p>
-          <p className="mt-1 text-2xl font-extrabold tracking-tight">{total}</p>
+          <p className="mt-1 text-3xl font-bold">{total}</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">평균 점수</p>
-          <p className="mt-1 text-2xl font-extrabold tracking-tight">{avg}</p>
+          <p className="mt-1 text-3xl font-bold">{avg}</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">통과율</p>
-          <p className="mt-1 text-2xl font-extrabold tracking-tight">{Math.round((passed / total) * 100)}%</p>
+          <p className="mt-1 text-3xl font-bold">{Math.round((passed / total) * 100)}%</p>
         </Card>
       </section>
 
@@ -66,13 +71,13 @@ export default function StatsPage() {
                 <BarChart data={counts} layout="vertical" margin={{ top: 0, right: 36, bottom: 0, left: 8 }} barCategoryGap={12}>
                   <CartesianGrid horizontal={false} stroke={GRID} />
                   <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: INK_MUTED }} axisLine={false} tickLine={false} />
-                  <YAxis type="category" dataKey="name" width={96} tick={{ fontSize: 13, fill: '#33332e' }} axisLine={false} tickLine={false} />
+                  <YAxis type="category" dataKey="name" width={96} tick={{ fontSize: 13, fill: BRAND }} axisLine={false} tickLine={false} />
                   <Tooltip
-                    cursor={{ fill: 'rgba(99,102,241,0.08)' }}
+                    cursor={{ fill: 'rgba(17,17,17,0.04)' }}
                     formatter={(value) => [`${value}회`, '틀린 횟수']}
-                    contentStyle={{ borderRadius: 12, border: `1px solid ${GRID}`, fontSize: 13 }}
+                    contentStyle={{ borderRadius: 0, border: `1px solid ${MUTED_BAR}`, fontSize: 13 }}
                   />
-                  <Bar dataKey="횟수" animationDuration={500} radius={[0, 4, 4, 0]} label={{ position: 'right', fontSize: 12, fill: '#33332e', formatter: (v: unknown) => `${v}회` }}>
+                  <Bar dataKey="횟수" animationDuration={500} radius={0} label={{ position: 'right', fontSize: 12, fill: BRAND, formatter: (v: unknown) => `${v}회` }}>
                     {counts.map((d, i) => (
                       <Cell key={d.code} fill={i === 0 ? BRAND : MUTED_BAR} />
                     ))}
@@ -87,11 +92,11 @@ export default function StatsPage() {
       {top && (
         <section>
           <SectionTitle>다음 글에서 이것만 지키세요</SectionTitle>
-          <Card className="bg-brand-50 ring-brand-100">
-            <p className="text-sm text-slate-600">
+          <Card className="bg-slate-950 text-white">
+            <p className="text-sm text-white/70">
               가장 많이 틀린 항목은 <b>'{top.name}'</b> ({top.횟수}회)
             </p>
-            <p className="mt-1 font-semibold">{TIPS[top.code]}</p>
+            <p className="mt-2 text-lg font-semibold leading-snug">{TIPS[top.code]}</p>
           </Card>
         </section>
       )}

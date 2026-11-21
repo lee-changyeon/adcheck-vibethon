@@ -1,7 +1,7 @@
 import { runCheck } from './rules'
 import type { CheckInput, CheckRecord } from './types'
 
-/** 점검 화면의 "예시 글로 체험하기" 버튼 */
+/** 점검 화면의 "예시 글로 체험하기" 목록 (드롭다운 순서 그대로) */
 export const EXAMPLES: { label: string; input: CheckInput }[] = [
   {
     label: '해시태그 끝에 #협찬',
@@ -42,6 +42,44 @@ export const EXAMPLES: { label: string; input: CheckInput }[] = [
 끈적임 없이 흡수돼서 아침 화장 전에 쓰기 좋아요.
 
 #내돈내산 #진정앰플 #수부지 #뷰티스타그램 #with글로우랩`,
+    },
+  },
+  {
+    label: '유튜브 설명란에만 안내',
+    input: {
+      platform: 'youtube',
+      reward: 'cash',
+      brand: '코어핏 필라테스',
+      text: `직장인 퇴근 후 필라테스 4주 변화 | 거북목 교정 브이로그
+설명란: 퇴근하고 일주일에 세 번, 4주 동안 다녀 본 솔직한 기록이에요.
+수업 시간표와 위치는 아래에 정리해 두었어요.
+이 영상은 코어핏 필라테스로부터 소정의 원고료를 받아 제작되었습니다.`,
+    },
+  },
+  {
+    label: '영어 #ad·#gifted만',
+    input: {
+      platform: 'instagram',
+      reward: 'product',
+      brand: '무드라이트',
+      text: `요즘 퇴근하고 제일 먼저 켜는 무드등 🕯️
+은은한 주황빛이라 눈이 편하고, 타이머 기능이 있어서 켜 놓고 잠들어도 돼요.
+
+#ad #gifted #무드등 #자취방꾸미기 #인테리어소품`,
+    },
+  },
+  {
+    label: '할인받고 #체험단만',
+    input: {
+      platform: 'blog',
+      reward: 'discount',
+      brand: '네일루미',
+      text: `범어동 네일샵 후기 - 겨울 자석젤 네일
+퇴근길에 들르기 좋은 범어역 근처 네일샵이에요.
+자석젤로 은은하게 반짝이는 겨울 네일을 받았는데 2주가 지나도 들뜬 곳이 없어요.
+예약은 네이버 예약으로 하면 편해요.
+
+#체험단 #범어동네일 #자석젤네일 #겨울네일`,
     },
   },
   {

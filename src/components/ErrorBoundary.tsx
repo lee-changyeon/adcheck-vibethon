@@ -15,7 +15,7 @@ export default class ErrorBoundary extends Component<{ children: ReactNode }, { 
         <p className="text-lg font-bold">잠시 문제가 생겼어요</p>
         <p className="text-sm text-slate-500">다시 시도하면 대부분 해결됩니다.</p>
         <button
-          className="rounded-xl bg-brand-600 px-4 py-3 text-sm font-semibold text-white"
+          className="min-h-12 rounded-full bg-brand-600 px-6 py-3 text-base font-medium text-white active:opacity-50"
           onClick={() => location.assign('/')}
         >
           처음 화면으로
