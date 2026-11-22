@@ -27,3 +27,14 @@ dist-ssr
 
 # 개인 정보가 들어갈 수 있는 제출 서식
 *.pdf
+
+# 안드로이드(TWA) 빌드 — 서명 키와 산출물은 절대 올리지 않음
+*.keystore
+*.jks
+*.aab
+*.apk
+*.idsig
+store/android/.gradle
+store/android/build
+store/android/app/build
+store/android/local.properties

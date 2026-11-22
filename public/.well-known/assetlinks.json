@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.ion_is.adcheck",
+      "sha256_cert_fingerprints": [
+        "C2:B3:B3:A7:92:E1:12:0E:23:C6:D7:41:AF:0E:73:4D:6E:33:CC:19:22:EC:1D:EC:78:38:6A:1F:74:80:28:63"
+      ]
+    }
+  }
+]
