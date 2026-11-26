@@ -7,10 +7,28 @@ import type { CheckInput, CheckResult, Issue, Platform, Reward, Severity, Verdic
  *  - 소비자가 쉽게 알 수 있는 한글 표현으로, 글의 첫 부분에, 다른 내용에 묻히지 않게
  */
 
-/** 인정되는 한글 표시 */
-const DISCLOSURE = /유료\s?광고|광고|협찬|무상\s?(?:으로\s?)?제공|무료\s?(?:로\s?)?제공\s?받|제공\s?받아|원고료|대가\s?를?\s?받|소정의|지원\s?받아/g
-/** 대가를 받았는데 쓰면 거짓이 되는 표현 */
-const FALSE_CLAIM = /내돈내산|직접\s?구매|(?:협찬|광고)\s?(?:이|은|는|가)?\s?(?:아님|아닙니다|아니에요|아니고|없음|없는|[xX])/g
+/**
+ * 인정되는 한글 표시
+ * '광고'는 다른 뜻(광고 모델, 광고학과 등)으로도 쓰여서 표시 모양일 때만 인정한다:
+ * [광고]·(광고)처럼 괄호 안, #광고 해시태그, '유료 광고', '광고 포함', '광고입니다·이에요·예요·임',
+ * '광고 글·영상·게시물·포스팅·콘텐츠', '광고:'
+ */
+const DISCLOSURE =
+  /유료\s?광고|(?<=[[(【]\s?)광고|(?<=#)광고(?![가-힣a-zA-Z])|광고(?=\s?(?:포함|입니다|이에요|예요|임(?![가-힣])|글|영상|게시물|포스팅|콘텐츠|:|\]|\)))|협찬|무상\s?(?:으로\s?)?제공|무료\s?(?:로\s?)?제공\s?받|제공\s?받아|원고료|대가\s?를?\s?받|소정의|지원\s?받아/g
+/**
+ * 대가를 받았는데 쓰면 거짓이 되는 표현 — 글쓴이가 "직접 샀다 / 광고가 아니다"라고 주장하는 형태만 잡는다
+ *  - 내돈내산, #직접구매, '직접 구매했·한·해서', '제 돈(내 돈)으로·주고 샀다'
+ *  - '협찬·광고 아님·아니에요·아니고·없음·X', '제공·협찬·지원·대가를 받지 않았다'
+ * '직접 구매하실 분은'(구매 안내), '광고 없는 요금제'(상품 설명)는 잡지 않는다
+ * '내돈내산 아니고·아니에요·아님·X'처럼 스스로 부정한 경우는 사실대로 밝힌 것이라 잡지 않는다
+ */
+const NAEDON = '내돈내산(?!\\s?(?:이|은|는|가)?\\s?(?:아니|아님|[xX](?![a-zA-Z])))'
+const FALSE_CLAIM = new RegExp(
+  `#?${NAEDON}|#직접구매|` +
+    /직접\s?(?:구매|구입)\s?(?:했|한(?=\s)|해서|함|하였)|[제내]\s?돈\s?(?:으로|주고)\s?(?:샀|삼|구매|구입)|(?:협찬|광고)\s?(?:이|은|는|가)?\s?(?:아님|아닙니다|아니에요|아니예요|아니고|아니라|없음|[xX](?![a-zA-Z]))|(?:제공|협찬|지원|대가)\s?(?:을|를)?\s?받지\s?않[았음]?/
+      .source,
+  'g',
+)
 /** 애매하거나 외국어라 표시로 인정되기 어려운 표현 */
 const VAGUE = /#?thanks\s?to\S*|#?땡스투\S*|#(?:ad|sponsored|gifted|pr)(?![a-z가-힣])|sponsored|gifted|#?체험단|#?서포터즈|#with\S+/gi
 /** 받은 대가를 구체적으로 밝힌 표현 */
@@ -20,6 +38,17 @@ const PENALTY: Record<Severity, number> = { danger: 35, warning: 15, tip: 5 }
 
 /** 인스타그램은 '더보기' 전에 앞부분 약 2줄만 보인다 */
 const INSTAGRAM_VISIBLE_CHARS = 40
+
+/** 사람이 보는 글자 수 (이모지·결합 문자도 1자로 센다) */
+const segmenter = typeof Intl !== 'undefined' && 'Segmenter' in Intl ? new Intl.Segmenter('ko', { granularity: 'grapheme' }) : null
+function visibleLength(s: string) {
+  if (segmenter) {
+    let n = 0
+    for (const _ of segmenter.segment(s)) n++
+    return n
+  }
+  return Array.from(s).length
+}
 
 /** 정규식에 걸린 부분을 같은 길이의 공백으로 지운다 (글자 위치 유지) */
 function mask(text: string, re: RegExp) {
@@ -47,7 +76,7 @@ function lineNoOf(text: string, idx: number) {
 }
 
 function isVisiblePosition(platform: Platform, text: string, idx: number) {
-  if (platform === 'instagram') return idx < INSTAGRAM_VISIBLE_CHARS
+  if (platform === 'instagram') return visibleLength(text.slice(0, idx)) < INSTAGRAM_VISIBLE_CHARS
   if (platform === 'blog') return lineNoOf(text, idx) <= 1 // 제목 또는 본문 첫 줄
   return lineNoOf(text, idx) === 0 // 유튜브: 제목(첫 줄)
 }
@@ -72,6 +101,36 @@ const REWARD_PHRASE: Record<Exclude<Reward, 'none'>, string> = {
   discount: '할인 혜택을 받아 작성한 글입니다.',
 }
 
+/** 정규식에 한 번이라도 걸리는지 (g 플래그의 lastIndex 영향 없이) */
+function has(s: string, re: RegExp) {
+  return new RegExp(re.source, re.flags.replace('g', '')).test(s)
+}
+
+/** 한 줄을 문장 단위로 나눈다 (마침표·느낌표·물음표 뒤에 공백이나 줄 끝이 올 때) */
+function sentencesOf(line: string) {
+  return (line.match(/.*?(?:[.!?。…]+(?=\s|$)|$)\s*/g) ?? []).filter(Boolean)
+}
+
+/**
+ * 고친 글에서 한 줄 정리 (점검에서 잡는 표현과 같은 정규식을 써서, 고친 글을 다시 점검해도 걸리지 않게)
+ *  1. 반대·애매한 표현이 든 해시태그, 표시용 해시태그(#광고·#협찬 등)는 해시태그째 지운다
+ *  2. 문장 속 '내돈내산'은 단어만 지운다 (제목에 자주 쓰여 문장을 통째로 지우면 제목이 사라짐). '내돈내산 아니고'처럼 부정한 것은 남긴다
+ *  3. 그 밖의 반대 표현('협찬 아님', '제 돈으로 샀어요' 등)이나 애매한 표현('Sponsored by', 'thanks to', 체험단 등)이
+ *     든 문장은 문장째 지운다 — 맨 앞에 명확한 표시 문장을 새로 넣으므로
+ */
+function cleanLine(line: string) {
+  const noTags = line
+    .replace(/#[^\s#]+/g, (tag) =>
+      has(tag, FALSE_CLAIM) || has(tag, VAGUE) || /^#(?:유료광고|광고|협찬)$/.test(tag) ? '' : tag,
+    )
+    .replace(new RegExp(NAEDON, 'g'), '')
+  return sentencesOf(noTags)
+    .filter((s) => !has(s, FALSE_CLAIM) && !has(s, VAGUE))
+    .join('')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim()
+}
+
 /** 고친 글: 애매한·반대 표현과 해시태그 표시를 지우고, 첫 부분에 명확한 표시 문장을 넣는다 */
 export function buildFixedText(input: CheckInput): string {
   const { platform, reward, brand } = input
@@ -79,15 +138,11 @@ export function buildFixedText(input: CheckInput): string {
   if (reward === 'none') return text
 
   const body = text
-    .replace(/#?thanks\s?to\S*/gi, '')
-    .replace(/#?땡스투\S*/g, '')
-    .replace(/#(?:ad|sponsored|gifted|pr)(?![a-z가-힣])/gi, '')
-    .replace(/#with\S+/gi, '')
-    .replace(/#(?:유료광고|광고|협찬|체험단|서포터즈)(?=\s|$)/g, '')
-    .replace(/#?내돈내산/g, '')
-    .replace(/#직접구매/g, '')
     .split('\n')
-    .map((l) => l.replace(/[ \t]{2,}/g, ' ').trimEnd())
+    .map((l) => ({ blank: !l.trim(), cleaned: cleanLine(l) }))
+    // 원래 내용이 있던 줄이 통째로 지워졌으면 그 줄은 뺀다 (빈 줄은 문단 구분으로 유지)
+    .filter((l) => l.blank || l.cleaned)
+    .map((l) => l.cleaned)
     .join('\n')
     .replace(/\n{3,}/g, '\n\n')
     .trim()
