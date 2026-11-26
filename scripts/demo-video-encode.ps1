@@ -1,13 +1,17 @@
 ﻿# 애드체크 30초 시연영상 인코딩: demo-video.mjs가 만든 프레임 → 30fps H.264 + Windows 한국어 음성(Heami) 나레이션
-# 사용: powershell -File scripts/demo-video-encode.ps1 -Work <작업폴더(임시)> -Out <출력 mp4>
+# 사용: powershell -File scripts/demo-video-encode.ps1 -Work <작업폴더(임시)> -Out <출력 mp4> [-LinesFile <나레이션 json>]
+#   -LinesFile: [[시작 초, "문장"], ...] (UTF-8). 없으면 애드체크(크리에이터) 나레이션. 비즈는 demo-video-biz.mjs가 만든 narration.json
+#   -Length: 영상 길이(초, 기본 30)
 # 필요: ffmpeg, Windows 한국어 음성(Microsoft Heami Desktop)
 param(
   [Parameter(Mandatory = $true)][string]$Work,
-  [Parameter(Mandatory = $true)][string]$Out
+  [Parameter(Mandatory = $true)][string]$Out,
+  [string]$LinesFile = '',
+  [double]$Length = 30
 )
 $ErrorActionPreference = 'Stop'
 
-# 나레이션 (시작 초, 문장) — 화면 장면 시각에 맞춤
+# 나레이션 (시작 초, 문장) — 화면 장면 시각에 맞춤 (기본: 애드체크 크리에이터 영상)
 $lines = @(
   @(0.2, '애드체크로 해시태그 끝에 협찬만 붙인 글을 점검해 볼게요.'),
   @(5.6, '점검하기를 누르면, 삼십 점, 위반 위험이 나와요.'),
@@ -16,6 +20,10 @@ $lines = @(
   @(20.1, '백 점, 적합. 이대로 올리면 돼요.'),
   @(24.3, '통계에서는 내가 가장 자주 틀리는 항목, 표시 위치를 보여 줘요.')
 )
+if ($LinesFile) {
+  $json = [IO.File]::ReadAllText((Resolve-Path $LinesFile), [Text.Encoding]::UTF8) | ConvertFrom-Json
+  $lines = @($json | ForEach-Object { , @([double]$_[0], [string]$_[1]) })
+}
 
 Add-Type -AssemblyName System.Speech
 $tts = New-Object System.Speech.Synthesis.SpeechSynthesizer
@@ -34,12 +42,12 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
 }
 $tts.Dispose()
 
-$mix = ($filters -join ';') + ';' + ((0..($lines.Count - 1) | ForEach-Object { "[a$_]" }) -join '') + "amix=inputs=$($lines.Count):normalize=0,apad,atrim=0:30[aout]"
+$mix = ($filters -join ';') + ';' + ((0..($lines.Count - 1) | ForEach-Object { "[a$_]" }) -join '') + "amix=inputs=$($lines.Count):normalize=0,apad,atrim=0:$Length[aout]"
 Push-Location $Work
 try {
   & ffmpeg -y -v error -f concat -safe 0 -i frames.txt @inputs `
     -filter_complex "[0:v]fps=30,scale=750:1624:flags=lanczos,format=yuv420p[v];$mix" `
-    -map '[v]' -map '[aout]' -t 30 -c:v libx264 -preset slow -crf 20 -c:a aac -b:a 128k -movflags +faststart $Out
+    -map '[v]' -map '[aout]' -t $Length -c:v libx264 -preset slow -crf 20 -c:a aac -b:a 128k -movflags +faststart $Out
   if ($LASTEXITCODE -ne 0) { throw "ffmpeg 실패 ($LASTEXITCODE)" }
 } finally { Pop-Location }
 Write-Output "saved $Out"
