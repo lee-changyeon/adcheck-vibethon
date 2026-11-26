@@ -87,7 +87,7 @@ export function CreatorForm({
                 aria-label="SNS 종류"
                 value={a.kind}
                 onChange={(e) => setAccount(i, { kind: e.target.value as SnsKind })}
-                className="w-24 shrink-0 rounded-3xl border-2 border-transparent bg-slate-100 in-data-[surface=soft]:bg-white px-3 text-base outline-none focus:border-slate-950 focus:bg-white focus:ring-[6px] focus:ring-slate-100"
+                className="w-24 shrink-0 rounded-2xl bg-white ring-1 ring-inset ring-slate-200 px-3 text-base outline-none focus:ring-2 focus:ring-brand-600"
               >
                 {SNS_KINDS.map((k) => (
                   <option key={k} value={k}>
@@ -100,7 +100,7 @@ export function CreatorForm({
                 placeholder="@계정"
                 value={a.handle}
                 onChange={(e) => setAccount(i, { handle: e.target.value })}
-                className="min-w-0 flex-1 rounded-3xl border-2 border-transparent bg-slate-100 in-data-[surface=soft]:bg-white px-4 py-3 text-base outline-none placeholder:text-slate-500 focus:border-slate-950 focus:bg-white focus:ring-[6px] focus:ring-slate-100"
+                className="min-w-0 flex-1 rounded-2xl bg-white ring-1 ring-inset ring-slate-200 px-4 py-3 text-base outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-brand-600"
               />
               <button
                 type="button"

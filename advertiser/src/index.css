@@ -1,51 +1,62 @@
 @import 'tailwindcss';
 
-/* 앱 대표 색은 여기서만 바꾼다 (brand-50 ~ brand-700)
-   v3 디자인: 검정·흰색·연회색 세 가지가 화면 대부분을 맡는다.
-   색은 꼭 알려야 할 신호(위반 빨강·적합 초록·보완 주황)에만 쓴다 */
-@theme {
-  /* Pretendard의 영문은 Inter 기반 → Inter 계열 느낌 + 한글 */
+/* 앱 대표 색은 여기서만 바꾼다 (brand-50 ~ brand-900 + 일러스트 보조색)
+   v4 디자인: 연한 민트 그라데이션 바탕 + 청록 대표색 + 흰 둥근 카드.
+   일러스트(입체 소품)에만 하늘·해·산호 보조색을 쓴다 */
+@theme static {
   --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
-  /* 대표색 = 잉크 검정. 600(주요 버튼·활성 탭), 700(누른 상태), 50·100은 연회색 면 */
-  --color-brand-50: #f5f5f5;
-  --color-brand-100: #e5e5e5;
-  --color-brand-500: #111111;
-  --color-brand-600: #111111;
-  --color-brand-700: #39393b;
+  /* 대표색 = 청록(민트). 50 바탕 · 100 히어로 그라데이션 · 600 주요 버튼 · 700 강조 글자 */
+  --color-brand-50: #f2f7f6;
+  --color-brand-100: #dcefeb;
+  --color-brand-200: #bfe6de;
+  --color-brand-300: #8fd8c9;
+  --color-brand-400: #3cc4aa;
+  --color-brand-500: #12ab92;
+  --color-brand-600: #008a78;
+  --color-brand-700: #00705f;
+  --color-brand-800: #0b544a;
+  --color-brand-900: #12352f;
 
-  /* 중립색(slate)을 순수 회색으로 덮어쓴다: 바탕·선·글자 전부 이 단계에서 나온다
-     100 연회색 면 · 200 연한 선 · 300 구분선 · 500 보조 글자 · 900/950 잉크 */
-  --color-slate-50: #fafafa;
-  --color-slate-100: #f5f5f5;
-  --color-slate-200: #e5e5e5;
-  --color-slate-300: #cacacb;
-  --color-slate-400: #9e9ea0;
-  --color-slate-500: #707072;
-  --color-slate-600: #4b4b4d;
-  --color-slate-700: #39393b;
-  --color-slate-800: #242425;
-  --color-slate-900: #111111;
-  --color-slate-950: #111111;
+  /* 일러스트·두 색 타이포 보조색 (화면 신호색으로는 쓰지 않는다) */
+  --color-brand-sky: #1e8fff;
+  --color-brand-sky-light: #8cc8ff;
+  --color-brand-sun: #ffbf1f;
+  --color-brand-sun-light: #ffe58a;
+  --color-brand-coral: #ff6a55;
+  --color-brand-coral-light: #ffb3a6;
 
-  /* 신호색: 위반(빨강)·적합(초록)만 디자인 기준값으로 맞춘다 */
-  --color-red-500: #d30005;
-  --color-red-600: #d30005;
-  --color-red-700: #b00004;
-  --color-red-800: #780700;
-  --color-green-600: #007d48;
-  --color-green-700: #007d48;
-  --color-green-800: #00603a;
+  /* 중립색: 살짝 푸른 기가 도는 회색 (글자·선·면) */
+  --color-slate-50: #f7f9f9;
+  --color-slate-100: #f0f3f3;
+  --color-slate-200: #e3e8e8;
+  --color-slate-300: #cdd4d4;
+  --color-slate-400: #9aa3a3;
+  --color-slate-500: #6b7474;
+  --color-slate-600: #4a5252;
+  --color-slate-700: #363d3d;
+  --color-slate-800: #262b2b;
+  --color-slate-900: #191d1d;
+  --color-slate-950: #111414;
 
-  /* 모서리: 카드·구역 같은 틀은 0px(각진 모양) · 입력 칸·바텀시트 24px · 버튼·칩·배지는 rounded-full(알약) */
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 24px;
+  /* 신호색: 위반(빨강)·적합(초록) */
+  --color-red-500: #e5383b;
+  --color-red-600: #d62828;
+  --color-red-700: #b01e1e;
+  --color-red-800: #7a1212;
+  --color-green-600: #0c8a4f;
+  --color-green-700: #0a7444;
+  --color-green-800: #075a35;
 
-  /* 그림자는 쓰지 않는다 (바텀시트만 예외). 깊이는 1px 구분선으로만 */
-  --shadow-sm: 0 0 #0000;
-  --shadow-lg: 0 0 #0000;
+  /* 모서리: 둥근 카드(2xl 24px) · 큰 구역(3xl 32px) · 버튼·칩·배지는 rounded-full(알약) */
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+
+  /* 은은한 띄움 그림자 (카드) */
+  --shadow-sm: 0 8px 24px -12px rgb(18 53 47 / 0.18), 0 1px 2px rgb(18 53 47 / 0.04);
+  --shadow-lg: 0 18px 40px -16px rgb(18 53 47 / 0.28);
 }
 
 /* 가로로 넘기는 칩 목록의 스크롤 막대 숨기기 */
@@ -56,8 +67,45 @@
   display: none;
 }
 
+/* 히어로 큰 글자: 같은 글자를 뒤에 한 벌 더 깔아(.hero-type-back) 흰 테두리와 그림자로 입체감을 낸다 */
+.hero-type {
+  letter-spacing: -0.04em;
+}
+.hero-type-back {
+  letter-spacing: -0.04em;
+  color: #fff;
+  -webkit-text-stroke: 14px #fff;
+  text-shadow: 0 16px 26px rgb(18 53 47 / 0.22);
+}
+
+/* 일러스트가 천천히 둥실 떠다니는 움직임 (움직임 줄이기 설정이면 멈춤) */
+@keyframes bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6px;
+  }
+}
+.bob {
+  animation: bob 4s ease-in-out infinite;
+}
+.bob-slow {
+  animation: bob 5.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bob,
+  .bob-slow {
+    animation: none;
+  }
+}
+
 html,
 body {
-  @apply bg-slate-100 text-slate-900 antialiased;
+  @apply bg-brand-50 text-slate-900 antialiased;
   -webkit-tap-highlight-color: transparent;
+}
+.hero-type-back * {
+  color: #fff;
 }

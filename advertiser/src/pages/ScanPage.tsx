@@ -2,7 +2,8 @@ import { AlertTriangle, Camera, ClipboardList, Images, Layers, RotateCcw, ScanLi
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CampaignSwitcher } from '../components/BizParts'
-import { Badge, Button, Card, ChoiceChips, EmptyState, Input, ProgressBar, SectionTitle, Textarea } from '../components/ui'
+import { PhoneArt } from '../components/Art'
+import { Badge, Button, Card, ChoiceChips, EmptyState, HeroType, Input, PageHero, Pill, ProgressBar, SectionTitle, Textarea } from '../components/ui'
 import { newId, normalizeHandle, type Post } from '../data/biz'
 import { PLATFORM_LABEL, type Platform } from '../data/types'
 import { useBiz } from '../hooks/useBiz'
@@ -213,10 +214,29 @@ export default function ScanPage() {
 
   return (
     <div className="space-y-4">
-      <CampaignSwitcher campaigns={campaigns} value={current.id} onChange={setCurrentId} />
+      <PageHero
+        pills={
+          <>
+            <Pill>복사 안 되는 글도</Pill>
+          </>
+        }
+        title={
+          <>
+            <HeroType>
+              <span className="text-brand-sky">화면</span> <span className="text-brand-500">스캔</span>
+            </HeroType>
+            <br />
+            <HeroType>글자 읽기</HeroType>
+          </>
+        }
+        art={<PhoneArt className="w-24 -rotate-12" />}
+      />
+      <div className="relative -mt-12">
+        <CampaignSwitcher campaigns={campaigns} value={current.id} onChange={setCurrentId} />
+      </div>
 
       {error && (
-        <div className="flex gap-2 bg-slate-100 p-3 pl-4 text-sm text-red-700 shadow-[inset_3px_0_0_var(--color-red-600)]" role="alert">
+        <div className="flex gap-2 rounded-2xl bg-red-50 p-3 pl-4 text-sm text-red-700" role="alert">
           <AlertTriangle size={18} className="mt-0.5 shrink-0" />
           <p>{error}</p>
         </div>
@@ -226,7 +246,7 @@ export default function ScanPage() {
         <>
           <Card className="space-y-2">
             <p className="flex items-center gap-2 font-bold">
-              <ScanLine size={18} className="text-slate-950" /> 화면을 찍어서 검수하기
+              <ScanLine size={18} className="text-brand-600" /> 화면을 찍어서 검수하기
             </p>
             <p className="text-sm leading-relaxed text-slate-600">
               모니터나 휴대폰 화면을 찍으면 화면 깜빡임 때문에 <b>가로 줄무늬</b>가 생기고, 손떨림으로 글자가 흐려져요. 그래서 짧은 간격으로 <b>여러 장</b>을 찍은 뒤
@@ -316,7 +336,7 @@ export default function ScanPage() {
                   type="button"
                   onClick={() => setSelectedId(f.id)}
                   aria-pressed={selected}
-                  className={`overflow-hidden rounded-xl bg-white text-left ring-2 transition active:scale-[0.98] ${selected ? 'ring-slate-950' : 'ring-transparent'}`}
+                  className={`overflow-hidden rounded-xl bg-white text-left ring-2 transition active:scale-[0.98] ${selected ? 'ring-brand-600' : 'ring-transparent'}`}
                 >
                   <div className="relative">
                     <img src={f.thumb} alt={`${i + 1}위 장면`} className="aspect-[3/4] w-full object-cover" />
@@ -370,7 +390,7 @@ export default function ScanPage() {
             </Card>
           )}
           {ocr.status === 'error' && (
-            <div className="flex gap-2 bg-slate-100 p-3 pl-4 text-sm text-amber-800 shadow-[inset_3px_0_0_var(--color-amber-600)]" role="alert">
+            <div className="flex gap-2 rounded-2xl bg-amber-50 p-3 pl-4 text-sm text-amber-800" role="alert">
               <AlertTriangle size={18} className="mt-0.5 shrink-0" />
               <div className="space-y-2">
                 <p>{ocr.message}</p>

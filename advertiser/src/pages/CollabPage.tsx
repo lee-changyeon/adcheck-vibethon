@@ -1,8 +1,9 @@
 import { CalendarDays, ChevronRight, Plus, Search, Send, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { BubbleArt } from '../components/Art'
 import { AccountLine, CreatorForm, EventForm } from '../components/CollabParts'
-import { Badge, BottomSheet, Card, ChoiceChips, EmptyState, Fab, ProgressBar, ScrollChips, SectionTitle, Toast } from '../components/ui'
+import { Badge, BottomSheet, Card, ChoiceChips, EmptyState, Fab, HeroType, PageHero, Pill, ProgressBar, ScrollChips, SectionTitle, Toast } from '../components/ui'
 import {
   type Creator,
   type CreatorField,
@@ -30,7 +31,27 @@ export default function CollabPage() {
 
   return (
     <div className="space-y-5">
-      <ChoiceChips options={TABS} value={tab} onChange={(t) => setParams(t === 'events' ? { tab: 'events' } : {}, { replace: true })} cols={2} />
+      <PageHero
+        pills={
+          <>
+            <Pill>크리에이터 DB</Pill>
+            <Pill tone="sky">선착순 선발</Pill>
+          </>
+        }
+        title={
+          <>
+            <HeroType>
+              <span className="text-brand-sky">행사</span> <span className="text-brand-500">협업</span>
+            </HeroType>
+            <br />
+            <HeroType>한곳에서</HeroType>
+          </>
+        }
+        art={<BubbleArt label="DM" className="rotate-6" />}
+      />
+      <div className="relative -mt-12">
+        <ChoiceChips options={TABS} value={tab} onChange={(t) => setParams(t === 'events' ? { tab: 'events' } : {}, { replace: true })} cols={2} />
+      </div>
       {tab === 'creators' ? <CreatorDb /> : <EventList />}
     </div>
   )
@@ -82,7 +103,7 @@ function CreatorDb() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="이름·계정·메모 검색"
-          className="w-full rounded-3xl border-2 border-transparent bg-slate-100 in-data-[surface=soft]:bg-white py-3 pl-10 pr-4 text-base outline-none placeholder:text-slate-500 focus:border-slate-950 focus:bg-white focus:ring-[6px] focus:ring-slate-100"
+          className="w-full rounded-2xl bg-white ring-1 ring-inset ring-slate-200 py-3 pl-10 pr-4 text-base outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-brand-600"
         />
       </label>
       <ScrollChips options={fieldOptions} value={field} onChange={setField} />

@@ -1,7 +1,8 @@
 import { Check, Megaphone, Plus, RotateCcw } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Card, ChoiceChips, EmptyState, Input, SectionTitle } from '../components/ui'
+import { TagArt } from '../components/Art'
+import { Button, Card, ChoiceChips, EmptyState, HeroType, Input, PageHero, Pill, SectionTitle } from '../components/ui'
 import { evaluate, newId, PAID_REWARD_LABEL, type PaidReward } from '../data/biz'
 import { useBiz } from '../hooks/useBiz'
 import { COLLAB_KEYS } from '../hooks/useCollab'
@@ -34,6 +35,23 @@ export default function CampaignsPage() {
 
   return (
     <div className="space-y-6">
+      <PageHero
+        pills={
+          <>
+            <Pill>체험단·협찬</Pill>
+          </>
+        }
+        title={
+          <>
+            <HeroType>
+              <span className="text-brand-sky">캠페인</span>
+            </HeroType>
+            <br />
+            <HeroType><span className="text-brand-500">관리</span></HeroType>
+          </>
+        }
+        art={<TagArt label="#광고" className="w-28 rotate-12" />}
+      />
       <section>
         <SectionTitle>캠페인 목록</SectionTitle>
         {campaigns.length === 0 ? (
@@ -54,12 +72,12 @@ export default function CampaignsPage() {
                   className={`flex items-center gap-3 ${selected ? 'ring-2 ring-inset ring-brand-600' : ''}`}
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-semibold">{c.name}</p>
+                    <p className="truncate font-extrabold">{c.name}</p>
                     <p className="mt-0.5 text-xs text-slate-400">
                       {c.brand} · {PAID_REWARD_LABEL[c.reward]} · 게시물 {ps.length}개 · 준수율 {ps.length ? Math.round((ok / ps.length) * 100) : 0}%
                     </p>
                   </div>
-                  {selected && <Check size={20} className="text-slate-950" />}
+                  {selected && <Check size={20} className="text-brand-600" />}
                 </Card>
               )
             })}

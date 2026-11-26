@@ -2,15 +2,17 @@ import { ChevronRight, ClipboardList, PartyPopper } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { CampaignSwitcher, StatusBadge, VerdictBadge } from '../components/BizParts'
-import { Card, EmptyState, SectionTitle } from '../components/ui'
+import { ShieldArt } from '../components/Art'
+import { Card, EmptyState, HeroType, PageHero, Pill, SectionTitle } from '../components/ui'
 import { evaluate, needsAction, PAID_REWARD_LABEL } from '../data/biz'
 import { PLATFORM_LABEL, type Verdict } from '../data/types'
 import { useBiz } from '../hooks/useBiz'
 
-const VERDICT_FILL: Record<Verdict, string> = { 적합: '#007d48', '보완 필요': '#d97706', '위반 위험': '#d30005' }
-const INK = '#111111'
-const INK_MUTED = '#707072'
-const GRID = '#e5e5e5'
+/* recharts는 CSS 변수를 못 읽어서 index.css @theme 값을 그대로 옮겨 둔다 */
+const VERDICT_FILL: Record<Verdict, string> = { 적합: '#0a7444', '보완 필요': '#d97706', '위반 위험': '#d62828' } // green-700 · amber-600 · red-600
+const INK = '#191d1d' // slate-900
+const INK_MUTED = '#6b7474' // slate-500
+const GRID = '#e3e8e8' // slate-200
 
 /** 기능 ④: 캠페인 대시보드 */
 export default function DashboardPage() {
@@ -32,23 +34,42 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <section className="space-y-2">
+      <PageHero
+        pills={
+          <>
+            <Pill>광고주용</Pill>
+            <Pill tone="sky">캠페인 검수</Pill>
+          </>
+        }
+        title={
+          <>
+            <HeroType>
+              <span className="text-brand-sky">캠페인</span> <span className="text-brand-500">검수</span>
+            </HeroType>
+            <br />
+            <HeroType>한눈에</HeroType>
+          </>
+        }
+        art={<ShieldArt className="rotate-12" />}
+      />
+
+      <Card className="relative -mt-14 space-y-2">
         <CampaignSwitcher campaigns={campaigns} value={current.id} onChange={setCurrentId} />
-        <p className="px-1 text-xs text-slate-400">제공한 대가: {PAID_REWARD_LABEL[current.reward]}</p>
-      </section>
+        <p className="px-1 text-xs font-bold text-brand-700">제공한 대가: {PAID_REWARD_LABEL[current.reward]}</p>
+      </Card>
 
       <section className="grid grid-cols-3 gap-2">
         <Card className="text-center">
           <p className="text-xs text-slate-500">게시물</p>
-          <p className="mt-1 text-3xl font-bold">{total}</p>
+          <p className="mt-1 text-3xl font-black">{total}</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">준수율</p>
-          <p className="mt-1 text-3xl font-bold">{rate}%</p>
+          <p className="mt-1 text-3xl font-black text-brand-700">{rate}%</p>
         </Card>
         <Card className="text-center">
           <p className="text-xs text-slate-500">조치 필요</p>
-          <p className={`mt-1 text-2xl font-bold ${todo.length ? 'text-red-600' : ''}`}>{todo.length}</p>
+          <p className={`mt-1 text-3xl font-black ${todo.length ? 'text-red-600' : ''}`}>{todo.length}</p>
         </Card>
       </section>
 
@@ -66,7 +87,7 @@ export default function DashboardPage() {
                     <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: INK_MUTED }} axisLine={false} tickLine={false} />
                     <YAxis type="category" dataKey="name" width={72} tick={{ fontSize: 13, fill: INK }} axisLine={false} tickLine={false} />
                     <Tooltip formatter={(v) => [`${v}개`, '게시물']} contentStyle={{ borderRadius: 12, border: `1px solid ${GRID}`, fontSize: 13 }} />
-                    <Bar dataKey="게시물" animationDuration={500} radius={0} label={{ position: 'right', fontSize: 12, fill: INK, formatter: (v: unknown) => `${v}개` }}>
+                    <Bar dataKey="게시물" animationDuration={500} radius={[0, 8, 8, 0]} label={{ position: 'right', fontSize: 12, fill: INK, formatter: (v: unknown) => `${v}개` }}>
                       {chart.map((d) => (
                         <Cell key={d.name} fill={VERDICT_FILL[d.name as Verdict]} />
                       ))}
@@ -81,14 +102,14 @@ export default function DashboardPage() {
             <SectionTitle>조치가 필요한 게시물</SectionTitle>
             {todo.length === 0 ? (
               <Card className="flex items-center gap-3 text-sm text-slate-600">
-                <PartyPopper size={22} className="text-slate-950" /> 모든 게시물이 규칙을 지키고 있어요.
+                <PartyPopper size={22} className="text-brand-600" /> 모든 게시물이 규칙을 지키고 있어요.
               </Card>
             ) : (
               <div className="space-y-2">
                 {todo.map(({ post, result }) => (
                   <Card key={post.id} onClick={() => navigate('/posts', { state: { openId: post.id } })} className="flex items-center gap-3">
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold">{post.influencer}</p>
+                      <p className="font-extrabold">{post.influencer}</p>
                       <p className="mt-0.5 truncate text-xs text-slate-400">
                         {PLATFORM_LABEL[post.platform]} · {result.issues[0]?.title}
                       </p>

@@ -2,7 +2,8 @@ import { Check, ClipboardList, Copy, Plus, RefreshCw, Trash2 } from 'lucide-reac
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { CampaignSwitcher, IssueList, StatusBadge, VerdictBadge } from '../components/BizParts'
-import { BottomSheet, Button, Card, ChoiceChips, EmptyState, Fab, Input, SectionTitle, Textarea } from '../components/ui'
+import { DocArt } from '../components/Art'
+import { BottomSheet, Button, Card, ChoiceChips, EmptyState, Fab, HeroType, Input, PageHero, Pill, SectionTitle, Textarea } from '../components/ui'
 import { type ActionStatus, buildRequestMessage, type Campaign, evaluate, needsAction, newId, normalizeHandle, type Post, STATUS_LABEL } from '../data/biz'
 import { PLATFORM_LABEL, type Platform } from '../data/types'
 import { useBiz } from '../hooks/useBiz'
@@ -34,7 +35,26 @@ export default function PostsPage() {
 
   return (
     <div className="space-y-4">
-      <CampaignSwitcher campaigns={campaigns} value={current.id} onChange={setCurrentId} />
+      <PageHero
+        pills={
+          <>
+            <Pill>붙여넣으면 바로 판정</Pill>
+          </>
+        }
+        title={
+          <>
+            <HeroType>
+              <span className="text-brand-sky">게시물</span>
+            </HeroType>
+            <br />
+            <HeroType><span className="text-brand-500">일괄</span> 검수</HeroType>
+          </>
+        }
+        art={<DocArt className="-rotate-6" />}
+      />
+      <div className="relative -mt-12">
+        <CampaignSwitcher campaigns={campaigns} value={current.id} onChange={setCurrentId} />
+      </div>
       <ChoiceChips
         options={[
           { value: 'all', label: `전체 ${rows.length}` },
@@ -55,9 +75,9 @@ export default function PostsPage() {
         <div className="space-y-2">
           {shown.map(({ post, result }) => (
             <Card key={post.id} onClick={() => setOpenId(post.id)} className="flex items-center gap-3">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-lg font-bold">{result.score}</div>
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-100 text-lg font-black text-brand-800">{result.score}</div>
               <div className="min-w-0 flex-1">
-                <p className="truncate font-semibold">{post.influencer}</p>
+                <p className="truncate font-extrabold">{post.influencer}</p>
                 <p className="mt-0.5 truncate text-xs text-slate-400">
                   {PLATFORM_LABEL[post.platform]} · {post.text.trim().split('\n')[0]}
                 </p>
