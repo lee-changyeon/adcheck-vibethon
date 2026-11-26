@@ -14,9 +14,9 @@ const VERDICT_TEXT: Record<Verdict, string> = {
 const RING: Record<Verdict, string> = { 적합: 'var(--color-green-700)', '보완 필요': 'var(--color-amber-600)', '위반 위험': 'var(--color-red-600)' }
 
 const SEVERITY_STYLE: Record<Severity, { icon: typeof ShieldAlert; box: string; iconColor: string; label: string }> = {
-  danger: { icon: ShieldAlert, box: 'bg-slate-100 shadow-[inset_3px_0_0_var(--color-red-600)]', iconColor: 'text-red-600', label: '위반' },
-  warning: { icon: AlertTriangle, box: 'bg-slate-100 shadow-[inset_3px_0_0_var(--color-amber-600)]', iconColor: 'text-amber-600', label: '보완' },
-  tip: { icon: Lightbulb, box: 'bg-slate-100 shadow-[inset_3px_0_0_var(--color-slate-400)]', iconColor: 'text-slate-500', label: '팁' },
+  danger: { icon: ShieldAlert, box: 'bg-red-50', iconColor: 'text-red-600', label: '위반' },
+  warning: { icon: AlertTriangle, box: 'bg-amber-50', iconColor: 'text-amber-600', label: '보완' },
+  tip: { icon: Lightbulb, box: 'bg-slate-100', iconColor: 'text-slate-500', label: '팁' },
 }
 
 function ScoreRing({ score, verdict }: { score: number; verdict: Verdict }) {
@@ -25,7 +25,7 @@ function ScoreRing({ score, verdict }: { score: number; verdict: Verdict }) {
   return (
     <div className="relative size-24 shrink-0">
       <svg viewBox="0 0 80 80" className="size-24 -rotate-90">
-        <circle cx="40" cy="40" r={r} fill="none" stroke="var(--color-slate-200)" strokeWidth="8" />
+        <circle cx="40" cy="40" r={r} fill="none" stroke="var(--color-slate-100)" strokeWidth="8" />
         <circle
           cx="40"
           cy="40"
@@ -33,14 +33,14 @@ function ScoreRing({ score, verdict }: { score: number; verdict: Verdict }) {
           fill="none"
           stroke={RING[verdict]}
           strokeWidth="8"
-          strokeLinecap="butt"
+          strokeLinecap="round"
           strokeDasharray={c}
           strokeDashoffset={c * (1 - score / 100)}
           style={{ transition: 'stroke-dashoffset 0.6s ease' }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-3xl font-bold">{score}</span>
+        <span className="text-3xl font-black">{score}</span>
         <span className="text-[11px] text-slate-500">/ 100점</span>
       </div>
     </div>
@@ -77,16 +77,18 @@ export default function ResultView({ result, onRecheck }: { result: CheckResult;
         const s = SEVERITY_STYLE[issue.severity]
         const Icon = s.icon
         return (
-          <div key={issue.code} className={`flex gap-3 p-4 pl-5 ${s.box}`}>
-            <Icon size={20} className={`mt-0.5 shrink-0 ${s.iconColor}`} />
+          <div key={issue.code} className="flex gap-3 rounded-2xl bg-white p-4 shadow-sm">
+            <span className={`flex size-11 shrink-0 items-center justify-center rounded-full ${s.box}`}>
+              <Icon size={22} className={s.iconColor} />
+            </span>
             <div className="min-w-0">
-              <p className="font-semibold">
+              <p className="font-extrabold">
                 <span className={`mr-1 text-xs ${s.iconColor}`}>{s.label}</span>
                 {issue.title}
               </p>
               {issue.found && (
                 <p className="mt-1 text-sm">
-                  문제 표현: <mark className="bg-white px-1 font-semibold text-slate-950 underline decoration-red-600 decoration-2 underline-offset-2">{issue.found}</mark>
+                  문제 표현: <mark className="rounded bg-red-50 px-1 font-semibold text-slate-950 underline decoration-red-600 decoration-2 underline-offset-2">{issue.found}</mark>
                 </p>
               )}
               <p className="mt-1 text-sm leading-relaxed text-slate-600">{issue.detail}</p>
@@ -104,14 +106,14 @@ export default function ResultView({ result, onRecheck }: { result: CheckResult;
 
       {needsFix && (
         <Card className="space-y-4">
-          <p className="text-lg font-semibold text-slate-950">✍️ 이렇게 고쳐서 올리세요</p>
-          <pre className="max-h-72 overflow-auto whitespace-pre-wrap bg-white p-4 font-sans text-sm leading-relaxed">{fixedText}</pre>
+          <p className="text-xl font-black tracking-[-0.02em] text-slate-950">✍️ 이렇게 고쳐서 올리세요</p>
+          <pre className="max-h-72 overflow-auto whitespace-pre-wrap rounded-2xl bg-brand-50 p-4 ring-1 ring-inset ring-brand-200 font-sans text-sm leading-relaxed">{fixedText}</pre>
           <div className="grid gap-2">
             <Button onClick={copy}>
               {copied ? <Check size={16} /> : <Copy size={16} />} {copied ? '복사됨' : '고친 글 복사'}
             </Button>
             {onRecheck && (
-              <Button variant="secondary" onClick={() => onRecheck(fixedText)} className="bg-white hover:bg-slate-50">
+              <Button variant="secondary" onClick={() => onRecheck(fixedText)}>
                 <RefreshCw size={16} /> 고친 글로 점검
               </Button>
             )}

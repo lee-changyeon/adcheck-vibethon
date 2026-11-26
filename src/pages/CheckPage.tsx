@@ -1,7 +1,8 @@
-import { ArrowLeft, Eraser, ScanSearch, Sparkles } from 'lucide-react'
+import { ArrowLeft, Eraser, Info, ScanSearch, Sparkles } from 'lucide-react'
 import { useRef, useState } from 'react'
+import { MagnifierArt } from '../components/Art'
 import ResultView from '../components/ResultView'
-import { Button, ChoiceChips, Input, SectionTitle, Select, Textarea } from '../components/ui'
+import { Banner, Button, Card, ChoiceChips, HeroType, Input, PageHero, Pill, SectionTitle, Select, Textarea } from '../components/ui'
 import { runCheck } from '../data/rules'
 import { EXAMPLES, makeRecord } from '../data/sample'
 import { type CheckInput, type CheckResult, PLATFORM_LABEL, type Platform, REWARD_LABEL, type Reward } from '../data/types'
@@ -68,31 +69,43 @@ export default function CheckPage() {
 
   return (
     <div className="space-y-8">
-      <section className="-mx-5 -mt-5 bg-slate-950 px-5 pt-7 pb-6 text-white">
-        <p className="text-[34px] leading-[0.95] font-black tracking-[-0.02em]">올리기 전에
-          <br />30초 점검</p>
-        <p className="mt-4 text-sm leading-relaxed text-white/70">
-          협찬 글을 붙여넣으면 공정위 광고 표시 기준으로 뒷광고 위험을 찾고, 고친 글까지 만들어 드려요.
-        </p>
-      </section>
+      <PageHero
+        pills={
+          <>
+            <Pill>30초</Pill>
+            <Pill tone="sky">무료</Pill>
+          </>
+        }
+        title={
+          <>
+            <HeroType>
+              <span className="text-brand-sky">올리기</span> <span className="text-brand-500">전</span>
+            </HeroType>
+            <br />
+            <HeroType>30초 점검</HeroType>
+          </>
+        }
+        desc="협찬 글을 붙여넣으면 공정위 광고 표시 기준으로 뒷광고 위험을 찾고, 고친 글까지 만들어 드려요."
+        art={<MagnifierArt className="rotate-12" />}
+      />
 
-      <section className="space-y-3 border-y border-slate-300 py-5">
+      <Card className="relative -mt-16 space-y-3">
         <div>
-          <p className="flex items-center gap-1.5 font-semibold text-slate-950">
-            <Sparkles size={16} /> 예시 글로 체험하기
+          <p className="flex items-center gap-1.5 text-[17px] font-extrabold text-slate-950">
+            <Sparkles size={18} className="text-brand-sun" /> 예시 글로 체험하기
           </p>
-          <p className="mt-0.5 text-sm text-slate-500">예시를 고르면 아래 입력 칸에 바로 채워져요. 그대로 점검해 보세요.</p>
+          <p className="mt-1 text-sm font-bold text-brand-700">예시를 고르면 아래 입력 칸에 바로 채워져요</p>
         </div>
         <Select placeholder={`예시 글 ${EXAMPLES.length}개 중에서 고르기`} options={EXAMPLE_OPTIONS} value={example} onChange={pickExample} />
-      </section>
+      </Card>
 
-      <section className="space-y-4">
+      <Card className="space-y-5">
         <div>
-          <p className="mb-2 text-sm font-medium text-slate-900">어디에 올리나요?</p>
+          <p className="mb-2 text-sm font-bold text-slate-900">어디에 올리나요?</p>
           <ChoiceChips options={PLATFORMS} value={draft.platform} onChange={(platform) => update({ platform })} />
         </div>
         <div>
-          <p className="mb-2 text-sm font-medium text-slate-900">업체에서 무엇을 받았나요?</p>
+          <p className="mb-2 text-sm font-bold text-slate-900">업체에서 무엇을 받았나요?</p>
           <ChoiceChips options={REWARDS} value={draft.reward} onChange={(reward) => update({ reward })} cols={2} />
         </div>
         <Input label="업체·브랜드 이름 (선택)" placeholder="예: 베이글하우스" value={draft.brand} onChange={(e) => update({ brand: e.target.value })} />
@@ -119,10 +132,10 @@ export default function CheckPage() {
             setPrevious(null)
             check(draft)
           }}
-          disabled={!draft.text.trim()} className="py-4 text-base">
-          <ScanSearch size={20} /> 점검하기
+          disabled={!draft.text.trim()} className="min-h-14 text-lg">
+          <ScanSearch size={22} /> 점검하기
         </Button>
-      </section>
+      </Card>
 
       <section ref={resultRef} className="scroll-mt-20">
         {result && (
@@ -138,9 +151,11 @@ export default function CheckPage() {
         )}
       </section>
 
-      <p className="text-center text-xs leading-relaxed text-slate-500">
-        공정거래위원회 「추천·보증 등에 관한 표시·광고 심사지침」을 바탕으로 한 참고용 점검이며, 법률 자문이 아니에요.
-      </p>
+      <Banner icon={<Info size={18} className="text-brand-700" />}>
+        <span className="block text-[13px] font-medium text-slate-600">
+          공정위 「추천·보증 등에 관한 표시·광고 심사지침」을 바탕으로 한 참고용 점검이며, 법률 자문이 아니에요.
+        </span>
+      </Banner>
     </div>
   )
 }

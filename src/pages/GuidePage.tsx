@@ -1,6 +1,7 @@
 import { CheckCircle2, ChevronRight, ExternalLink, Trash2, XCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { Button, Card, SectionTitle } from '../components/ui'
+import { BookArt } from '../components/Art'
+import { Button, Card, HeroType, PageHero, Pill, SectionTitle } from '../components/ui'
 import { APP_INFO, STORAGE_PREFIX } from '../data/app'
 
 const RULES: { title: string; desc: string; good: string; bad: string }[] = [
@@ -47,9 +48,29 @@ export default function GuidePage() {
 
   return (
     <div className="space-y-6">
-      <section>
-        <SectionTitle>뒷광고란?</SectionTitle>
-        <Card className="text-sm leading-relaxed text-slate-600">
+      <PageHero
+        pills={
+          <>
+            <Pill>공정위 심사지침</Pill>
+            <Pill tone="ink">꼭 4가지</Pill>
+          </>
+        }
+        title={
+          <>
+            <HeroType>
+              <span className="text-brand-sky">뒷</span>
+              <span className="text-brand-500">광고</span>
+            </HeroType>
+            <br />
+            <HeroType>피하는 법</HeroType>
+          </>
+        }
+        art={<BookArt className="rotate-6" />}
+      />
+
+      <section className="relative -mt-12">
+        <Card className="text-[15px] leading-relaxed text-slate-600">
+          <p className="mb-2 text-xl font-black tracking-[-0.02em] text-slate-950">뒷광고란?</p>
           업체에서 돈이나 제품을 받고 쓴 글인데, 광고라는 사실을 숨기고 <b className="text-slate-900">내돈내산 후기처럼</b> 올리는 것이에요.
           보는 사람은 순수한 후기로 믿기 때문에 소비자를 속이게 돼요. 공정거래위원회는 「추천·보증 등에 관한 표시·광고 심사지침」으로
           표시 방법을 정해 두었어요.
@@ -61,12 +82,12 @@ export default function GuidePage() {
         <div className="space-y-3">
           {RULES.map((r) => (
             <Card key={r.title} className="space-y-2">
-              <p className="font-semibold text-slate-950">{r.title}</p>
+              <p className="text-[17px] font-extrabold text-slate-950">{r.title}</p>
               <p className="text-sm leading-relaxed text-slate-600">{r.desc}</p>
-              <p className="flex gap-2 bg-white p-3 text-sm text-green-800 shadow-[inset_2px_0_0_var(--color-green-700)]">
+              <p className="flex gap-2 rounded-xl bg-green-50 p-3 text-sm font-medium text-green-800">
                 <CheckCircle2 size={16} className="mt-0.5 shrink-0" /> {r.good}
               </p>
-              <p className="flex gap-2 bg-white p-3 text-sm text-red-800 shadow-[inset_2px_0_0_var(--color-red-600)]">
+              <p className="flex gap-2 rounded-xl bg-red-50 p-3 text-sm font-medium text-red-800">
                 <XCircle size={16} className="mt-0.5 shrink-0" /> {r.bad}
               </p>
             </Card>
@@ -115,7 +136,7 @@ export default function GuidePage() {
         </Card>
         <Link
           to="/privacy"
-          className="mt-3 flex min-h-14 items-center justify-between border-y border-slate-300 text-base font-medium text-slate-950 active:opacity-50"
+          className="mt-3 flex min-h-14 items-center justify-between rounded-2xl bg-white px-5 text-base font-bold text-slate-950 shadow-sm active:opacity-60"
         >
           개인정보 처리방침 <ChevronRight size={18} className="text-slate-950" />
         </Link>
